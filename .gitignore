@@ -1,4 +1,5 @@
 *.log
+.ai/
 .DS_Store
 .env
 .env.backup
