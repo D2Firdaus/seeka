@@ -39,17 +39,17 @@ trait HasCodeId
     protected static function generateCode($model): string
     {
         $prefix = $model->codePrefix;
-        $key = $model->getKeyName();
-        $start = strlen($prefix) + 1;
+        $key    = $model->getKeyName();
+        $start  = strlen($prefix) + 1;
 
         $last = DB::table($model->getTable())
-            ->where($key, 'like', $prefix.'%')
+            ->where($key, 'like', $prefix . '%')
             ->lockForUpdate()
             ->orderByRaw("CAST(SUBSTRING($key, $start) AS UNSIGNED) DESC")
             ->value($key);
 
         $next = $last ? ((int) substr($last, strlen($prefix))) + 1 : 1;
 
-        return $prefix.str_pad((string) $next, 3, '0', STR_PAD_LEFT);
+        return $prefix . str_pad((string) $next, 3, '0', STR_PAD_LEFT);
     }
 }
