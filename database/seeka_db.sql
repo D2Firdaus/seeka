@@ -204,21 +204,21 @@ CREATE TABLE item_matches (
 
 -- Data awal (opsional)
 INSERT INTO categories (category_id, name, slug, created_at, updated_at) VALUES
-  ('CTG001','Elektronik','elektronik',NOW(),NOW()),
-  ('CTG002','Dokumen & Kartu','dokumen-kartu',NOW(),NOW()),
-  ('CTG003','Tas & Dompet','tas-dompet',NOW(),NOW()),
-  ('CTG004','Kunci','kunci',NOW(),NOW()),
-  ('CTG005','Pakaian & Aksesori','pakaian-aksesori',NOW(),NOW()),
-  ('CTG006','Alat Tulis & Buku','alat-tulis-buku',NOW(),NOW()),
-  ('CTG007','Perlengkapan Olahraga','perlengkapan-olahraga',NOW(),NOW()),
+  ('CTG001','Dompet','dompet',NOW(),NOW()),
+  ('CTG002','Kartu','kartu',NOW(),NOW()),
+  ('CTG003','Kunci','kunci',NOW(),NOW()),
+  ('CTG004','Alat Tulis & Buku','alat-tulis-buku',NOW(),NOW()),
+  ('CTG005','Handphone','handphone',NOW(),NOW()),
+  ('CTG006','Charger','charger',NOW(),NOW()),
+  ('CTG007','Pakaian & Aksesori','pakaian-aksesori',NOW(),NOW()),
   ('CTG008','Lainnya','lainnya',NOW(),NOW());
 
 INSERT INTO locations (location_id, name, created_at, updated_at) VALUES
-  ('LOC001','Gedung Rektorat',NOW(),NOW()),
-  ('LOC002','Perpustakaan',NOW(),NOW()),
-  ('LOC003','Kantin',NOW(),NOW()),
-  ('LOC004','Masjid/Mushola',NOW(),NOW()),
-  ('LOC005','Parkiran',NOW(),NOW()),
-  ('LOC006','Lapangan',NOW(),NOW()),
-  ('LOC007','Laboratorium',NOW(),NOW()),
-  ('LOC008','Ruang Kelas',NOW(),NOW());
+  ('LOC001','FASILKOM LAB LANJUT 1',NOW(),NOW()),
+  ('LOC002','FASILKOM LAB LANJUT 2',NOW(),NOW()),
+  ('LOC003','FASILKOM LAB DASAR 1',NOW(),NOW()),
+  ('LOC004','FASILKOM LAB DASAR 2',NOW(),NOW()),
+  ('LOC005','FASILKOM 4.75-1',NOW(),NOW()),
+  ('LOC006','FASILKOM 4.76-2',NOW(),NOW()),
+  ('LOC007','FASILKOM 4.77-3',NOW(),NOW()),
+  ('LOC008','FASILKOM 4.79-5',NOW(),NOW());
