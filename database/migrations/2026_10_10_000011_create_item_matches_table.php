@@ -8,7 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Hasil pencocokan lost <-> found dan status notifikasinya.
+        // Pasangan lost <-> found yang LOLOS threshold (keluaran skenario 5) dan status notifikasinya.
+        // Skor skenario 1-4 tidak disimpan di sini; skenario itu dibandingkan di skrip evaluasi offline.
         // Aturan yang dijaga aplikasi (bukan database): lost_item_id harus items.type = 'lost',
         // found_item_id harus items.type = 'found', dan keduanya tidak boleh sama.
         Schema::create('item_matches', function (Blueprint $table) {
@@ -16,10 +17,15 @@ return new class extends Migration
             $table->string('lost_item_id', 10);
             $table->string('found_item_id', 10);
 
-            $table->decimal('score', 5, 4);                    // skor akhir gabungan (untuk mengurutkan)
-            $table->decimal('sbert_cosine', 5, 4);             // kemiripan makna teks (untuk gerbang notifikasi)
-            $table->decimal('bm25_norm', 5, 4)->nullable();    // BM25 ternormalisasi (fitur untuk regresi logistik)
-            $table->decimal('metadata_score', 5, 4);           // kategori + lokasi + tanggal (untuk gerbang notifikasi)
+            // Komponen tahap 1
+            $table->decimal('jw_score', 5, 4);                 // Jaro-Winkler pada judul (skenario 1)
+            $table->decimal('metadata_score', 5, 4);           // kategori + lokasi + tanggal (skenario 1)
+            $table->decimal('bgem3_dense', 5, 4);              // cosine dense BGE-M3 (skenario 3)
+            $table->decimal('bgem3_sparse', 5, 4)->nullable(); // skor sparse BGE-M3 (skenario 2); NULL sampai sparse
+                                                               // diimplementasikan di website. Skalanya BUKAN cosine.
+            // Skor akhir
+            $table->decimal('bge_reranker', 5, 4);             // keluaran reranker (sigmoid 0-1): dasar urutan dan threshold
+            $table->string('pipeline_version', 50);            // skenario, model, bobot, dan threshold yang dipakai
 
             $table->enum('status', ['new', 'notified', 'viewed', 'dismissed'])->default('new');
             $table->timestamp('notified_at')->nullable();

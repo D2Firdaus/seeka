@@ -178,19 +178,22 @@ CREATE TABLE item_embeddings (
   CONSTRAINT item_embeddings_item_id_foreign FOREIGN KEY (item_id) REFERENCES items (item_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+-- Pasangan lost <-> found yang LOLOS threshold (keluaran skenario 5).
 -- Aturan yang dijaga aplikasi: lost_item_id harus items.type='lost', found_item_id harus items.type='found'
 CREATE TABLE item_matches (
-  match_id       VARCHAR(10)   NOT NULL,                -- MTC001
-  lost_item_id   VARCHAR(10)   NOT NULL,
-  found_item_id  VARCHAR(10)   NOT NULL,
-  score          DECIMAL(5,4)  NOT NULL,
-  sbert_cosine   DECIMAL(5,4)  NOT NULL,
-  bm25_norm      DECIMAL(5,4)  NULL,
-  metadata_score DECIMAL(5,4)  NOT NULL,
-  status         ENUM('new','notified','viewed','dismissed') NOT NULL DEFAULT 'new',
-  notified_at    TIMESTAMP NULL,
-  created_at     TIMESTAMP NULL,
-  updated_at     TIMESTAMP NULL,
+  match_id         VARCHAR(10)   NOT NULL,              -- MTC001
+  lost_item_id     VARCHAR(10)   NOT NULL,
+  found_item_id    VARCHAR(10)   NOT NULL,
+  jw_score         DECIMAL(5,4)  NOT NULL,              -- Jaro-Winkler pada judul
+  metadata_score   DECIMAL(5,4)  NOT NULL,              -- kategori + lokasi + tanggal
+  bgem3_dense      DECIMAL(5,4)  NOT NULL,              -- cosine dense BGE-M3
+  bgem3_sparse     DECIMAL(5,4)  NULL,                  -- skor sparse BGE-M3 (bukan cosine); NULL sampai sparse diimplementasikan
+  bge_reranker     DECIMAL(5,4)  NOT NULL,              -- skor reranker (sigmoid 0-1): urutan dan threshold
+  pipeline_version VARCHAR(50)   NOT NULL,              -- skenario, model, bobot, threshold
+  status           ENUM('new','notified','viewed','dismissed') NOT NULL DEFAULT 'new',
+  notified_at      TIMESTAMP NULL,
+  created_at       TIMESTAMP NULL,
+  updated_at       TIMESTAMP NULL,
   PRIMARY KEY (match_id),
   UNIQUE KEY item_matches_lost_item_id_found_item_id_unique (lost_item_id, found_item_id),
   KEY item_matches_status_index (status),
