@@ -43,8 +43,13 @@
         </form>
 
         <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <p class="text-body text-muted">
+            <p class="hidden min-[512px]:block text-body text-muted">
                 Menampilkan {{ $items->firstItem() ?? 0 }}–{{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
+            </p>
+
+            <p class="min-[512px]:hidden text-body text-muted">
+                {{ $items->firstItem() ?? 0 }}–{{ $items->lastItem() ?? 0 }}<span
+                    class="hidden min-[360px]:inline"> dari {{ $items->total() }}</span> data
             </p>
 
             <form method="GET" action="{{ route('home') }}" class="flex items-center gap-2">
@@ -57,7 +62,9 @@
                     @endforeach
                 @endforeach
 
-                <label for="per_page" class="text-body text-ink-soft">Data per halaman</label>
+                <label for="per_page" class="text-body text-ink-soft"><span
+                        class="hidden min-[512px]:inline">Data per halaman</span><span
+                        class="min-[512px]:hidden">Menampilkan</span></label>
 
                 <div class="relative">
                     <select id="per_page" name="per_page" onchange="this.form.submit()"
