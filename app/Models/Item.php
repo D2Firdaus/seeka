@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Database\Factories\ItemFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable([
@@ -24,24 +25,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[Hidden(['hidden_detail', 'storage_location'])]
 class Item extends Model
 {
-    use SoftDeletes;
+    /** @use HasFactory<ItemFactory> */
+    use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'item_id';
 
     protected $attributes = [
+        'type' => 'lost',
         'status' => 'open',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
             'date_event' => 'date',
         ];
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     public function category(): BelongsTo
@@ -54,38 +57,8 @@ class Item extends Model
         return $this->belongsTo(Location::class, 'location_id', 'location_id');
     }
 
-    public function images(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(ItemImage::class, 'item_id', 'item_id');
-    }
-
-    public function embeddings(): HasMany
-    {
-        return $this->hasMany(ItemEmbedding::class, 'item_id', 'item_id');
-    }
-
-    public function logs(): HasMany
-    {
-        return $this->hasMany(ItemLog::class, 'item_id', 'item_id');
-    }
-
-    public function lostMatches(): HasMany
-    {
-        return $this->hasMany(ItemMatch::class, 'lost_item_id', 'item_id');
-    }
-
-    public function foundMatches(): HasMany
-    {
-        return $this->hasMany(ItemMatch::class, 'found_item_id', 'item_id');
-    }
-
-    public function claims(): HasMany
-    {
-        return $this->hasMany(Claim::class, 'found_item_id', 'item_id');
-    }
-
-    public function lostClaims(): HasMany
-    {
-        return $this->hasMany(Claim::class, 'lost_item_id', 'item_id');
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 }
