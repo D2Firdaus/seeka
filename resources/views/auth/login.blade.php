@@ -10,7 +10,7 @@
                     Login SEEKA
                 </h1>
 
-                <p class="mt-4 text-subtitle text-balance text-[#6E6A63]">
+                <p class="mt-4 text-subtitle text-balance text-muted">
                     Bantu barang kembali kepada pemiliknya.
                 </p>
 
@@ -22,15 +22,15 @@
                     @csrf
 
                     <div>
-                        <label for="email" class="mb-1.5 block text-body text-[#3B382F]">Email</label>
+                        <label for="email" class="mb-1.5 block text-body text-ink-soft">Email</label>
                         <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
                             autocomplete="username" placeholder="npm@unsika.ac.id"
-                            class="w-full rounded-control border-[0.5px] border-black/25 bg-white px-3.5 py-3 text-body text-[#141414] outline-none transition placeholder:text-[#ABA69B] hover:border-black/40 focus:border-primary" />
+                            class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-faint hover:border-black/40 focus:border-primary" />
                     </div>
 
                     <div class="mt-5">
                         <div class="mb-1.5 flex items-baseline justify-between gap-3">
-                            <label for="password" class="text-body text-[#3B382F]">Kata Sandi</label>
+                            <label for="password" class="text-body text-ink-soft">Kata Sandi</label>
 
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}"
@@ -41,7 +41,7 @@
                         </div>
                         <input id="password" name="password" type="password" required autocomplete="current-password"
                             placeholder="Masukkan kata sandi"
-                            class="w-full rounded-control border-[0.5px] border-black/25 bg-white px-3.5 py-3 text-body text-[#141414] outline-none transition placeholder:text-[#ABA69B] hover:border-black/40 focus:border-primary" />
+                            class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-faint hover:border-black/40 focus:border-primary" />
                     </div>
 
                     <button type="submit"
@@ -52,12 +52,12 @@
 
                 <div class="mt-6 flex items-center gap-3">
                     <span class="h-px flex-1 bg-black/10"></span>
-                    <span class="text-detail text-[#6E6A63]">Atau masuk dengan</span>
+                    <span class="text-caption text-muted">Atau masuk dengan</span>
                     <span class="h-px flex-1 bg-black/10"></span>
                 </div>
 
                 <a href="{{ route('google.login') }}"
-                    class="mt-4 flex w-full items-center justify-center gap-2.5 rounded-control border-[0.5px] border-black/25 bg-white px-5 py-3.5 text-body font-semibold text-[#141414] transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    class="mt-4 flex w-full items-center justify-center gap-2.5 rounded-control border-[0.5px] border-line bg-white px-5 py-3.5 text-body font-semibold text-ink transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="#4285F4"
                             d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.86c2.26-2.09 3.56-5.17 3.56-8.87z" />
@@ -71,14 +71,14 @@
                     Masuk dengan Google
                 </a>
 
-                <p class="mt-6 text-center text-body text-[#6E6A63]">
+                <p class="mt-6 text-center text-body text-muted">
                     Belum punya akun?
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="font-semibold text-primary underline-offset-4 hover:underline">
                             Daftar
                         </a>
                     @else
-                        <span class="font-semibold text-[#3B382F]">Daftar</span>
+                        <span class="font-semibold text-ink-soft">Daftar</span>
                     @endif
                 </p>
             </div>

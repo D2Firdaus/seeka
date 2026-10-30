@@ -12,7 +12,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="flex min-h-screen flex-col bg-[#FBFAF7] text-[#141414] antialiased">
+<body class="flex min-h-screen flex-col bg-surface text-ink antialiased">
     <header class="w-full">
         <div class="mx-auto w-full max-w-6xl px-5 pt-6 sm:px-8 sm:pt-8">
             <div class="mx-auto max-w-[440px]">
@@ -27,7 +27,7 @@
 
     <footer class="w-full">
         <div class="mx-auto w-full max-w-6xl px-5 py-6 sm:px-8">
-            <div class="mx-auto max-w-[440px] text-detail text-[#8B867C]">
+            <div class="mx-auto max-w-[440px] text-caption text-subtle">
                 &copy; {{ date('Y') }} {{ config('app.name', 'SEEKA') }}
             </div>
         </div>
