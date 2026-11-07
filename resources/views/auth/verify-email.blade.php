@@ -16,17 +16,13 @@
 
                 <p class="mt-4 text-body text-pretty text-muted">
                     Kami telah mengirimkan tautan verifikasi ke
-                    <span class="font-semibold text-primary">{{ auth()->user()->email }}</span>
+                    <span class="font-semibold text-primary">{{ $email }}</span>
                 </p>
 
                 <p class="mt-3 text-body text-pretty text-muted">
                     Klik tautan tersebut untuk menyelesaikan proses verifikasi. Anda mungkin perlu memeriksa
                     <span class="font-semibold text-ink">folder spam</span> Anda.
                 </p>
-
-                @php
-                    $cooldown = auth()->user()->verificationCooldownRemaining();
-                @endphp
 
                 <div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
                     <form method="POST" action="{{ route('verification.resend') }}">

@@ -28,6 +28,13 @@
                         Kirim Ulang Email
                     </button>
                 </form>
+
+                <p class="mt-4 text-body text-muted">
+                    Tidak menerima email?
+                    <a href="{{ route('register') }}" class="font-semibold text-primary underline-offset-4 hover:underline">
+                        Daftar Ulang
+                    </a>
+                </p>
             </div>
         </div>
     </main>

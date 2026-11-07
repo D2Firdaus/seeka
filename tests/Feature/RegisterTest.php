@@ -16,7 +16,7 @@ test('register page renders the registration form', function () {
         ->assertSee('Saya Menyetujui Syarat dan Ketentuan serta Kebijakan Privasi');
 });
 
-test('registration creates the account and logs the user in', function () {
+test('registration creates the account without auto-login', function () {
     $response = $this->post(route('register'), [
         'name' => 'Dede Firdaus',
         'email' => '1234567890@student.unsika.ac.id',
@@ -26,7 +26,7 @@ test('registration creates the account and logs the user in', function () {
     ]);
 
     $response->assertRedirect(route('verification.notice'));
-    $this->assertAuthenticated();
+    $this->assertGuest();
     $this->assertDatabaseHas('users', [
         'name' => 'Dede Firdaus',
         'email' => '1234567890@student.unsika.ac.id',
@@ -35,6 +35,7 @@ test('registration creates the account and logs the user in', function () {
         'notify_email' => true,
         'notify_whatsapp' => false,
     ]);
+    expect(session('pending_verification_email'))->toBe('1234567890@student.unsika.ac.id');
 });
 
 test('registration sends the activation email to the new user', function () {
@@ -77,7 +78,7 @@ test('registration accepts unsika.ac.id campus emails', function (string $email)
     ]);
 
     $response->assertRedirect(route('verification.notice'));
-    $this->assertAuthenticated();
+    $this->assertGuest();
     $this->assertDatabaseHas('users', ['email' => $email]);
 })->with([
     'domain utama' => 'budi@unsika.ac.id',
@@ -194,7 +195,7 @@ test('re-registering an unverified account continues to the verification page', 
     ]);
 
     $response->assertRedirect(route('verification.notice'));
-    $this->assertAuthenticatedAs($user);
+    $this->assertGuest();
     $this->assertDatabaseCount('users', 1);
     $this->assertDatabaseHas('users', [
         'user_id' => $user->user_id,

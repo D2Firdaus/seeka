@@ -25,6 +25,9 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Autentikasi pengguna berdasarkan kredensial yang diberikan.
+     *
+     * Pengguna yang belum verifikasi email tidak bisa masuk —
+     * diarahkan ke halaman aktivasi email.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -41,6 +44,17 @@ class AuthenticatedSessionController extends Controller
             throw ValidationException::withMessages([
                 'email' => 'Email atau kata sandi yang Anda masukkan salah.',
             ]);
+        }
+
+        $user = Auth::user();
+
+        if (! $user->hasVerifiedEmail()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            $request->session()->put('pending_verification_email', $user->email);
+
+            return redirect()->route('verification.notice');
         }
 
         $request->session()->regenerate();

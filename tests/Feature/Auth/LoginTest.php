@@ -49,6 +49,21 @@ test('valid credentials authenticate the user', function () {
     $this->assertAuthenticated();
 });
 
+test('unverified users are redirected to the verification page', function () {
+    User::factory()->unverified()->create([
+        'email' => 'budi@kampus.ac.id',
+        'password' => 'secret-password',
+    ]);
+
+    $this->post('/login', [
+        'email' => 'budi@kampus.ac.id',
+        'password' => 'secret-password',
+    ])->assertRedirect(route('verification.notice'));
+
+    $this->assertGuest();
+    expect(session('pending_verification_email'))->toBe('budi@kampus.ac.id');
+});
+
 test('authenticated users are redirected away from the login page', function () {
     $this->actingAs(User::factory()->create())
         ->get('/login')
