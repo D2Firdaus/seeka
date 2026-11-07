@@ -49,6 +49,19 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Akhiri sesi pengguna lalu kembali ke beranda.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('home');
+    }
+
+    /**
      * Alihkan pengguna ke halaman masuk Google.
      */
     public function redirectToGoogle(): RedirectResponse
@@ -95,6 +108,10 @@ class AuthenticatedSessionController extends Controller
 
         if ($user->google_id !== $googleUser->getId()) {
             $user->update(['google_id' => $googleUser->getId()]);
+        }
+
+        if (! $user->hasVerifiedEmail() && strcasecmp($user->email, $googleUser->getEmail()) === 0) {
+            $user->markEmailAsVerified();
         }
 
         Auth::login($user);

@@ -54,3 +54,11 @@ test('authenticated users are redirected away from the login page', function () 
         ->get('/login')
         ->assertRedirect(route('home'));
 });
+
+test('logging out ends the session and returns to the beranda', function () {
+    $this->actingAs(User::factory()->create())
+        ->post(route('logout'))
+        ->assertRedirect(route('home'));
+
+    $this->assertGuest();
+});

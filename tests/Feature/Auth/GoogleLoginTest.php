@@ -33,6 +33,38 @@ test('google callback creates an account and signs the user in', function () {
         'email' => 'budi@kampus.ac.id',
         'google_id' => 'google-uid-1',
     ]);
+    expect(User::first()->email_verified_at)->not->toBeNull();
+});
+
+test('google login activates an unverified account with the same email', function () {
+    $user = User::factory()->unverified()->create(['email' => 'budi@kampus.ac.id']);
+
+    Socialite::fake('google', SocialiteUser::fake([
+        'id' => 'google-uid-5',
+        'name' => 'Budi Santoso',
+        'email' => 'budi@kampus.ac.id',
+    ]));
+
+    $this->get(route('google.callback'))->assertRedirect(route('home'));
+
+    expect($user->fresh()->email_verified_at)->not->toBeNull();
+});
+
+test('google login does not activate a different email address', function () {
+    $user = User::factory()->unverified()->create([
+        'email' => 'budi@kampus.ac.id',
+        'google_id' => 'google-uid-6',
+    ]);
+
+    Socialite::fake('google', SocialiteUser::fake([
+        'id' => 'google-uid-6',
+        'name' => 'Budi Santoso',
+        'email' => 'lain@kampus.ac.id',
+    ]));
+
+    $this->get(route('google.callback'))->assertRedirect(route('home'));
+
+    expect($user->fresh()->email_verified_at)->toBeNull();
 });
 
 test('google callback links an existing account with the same email', function () {
