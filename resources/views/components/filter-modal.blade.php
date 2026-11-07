@@ -38,7 +38,8 @@
                             @selected(request('category') == $category->category_id)>{{ $category->name }}</option>
                     @endforeach
                 </select>
-                    <x-icons.chevron-right class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
+                <x-icons.chevron-right
+                    class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
             </div>
         </div>
 
@@ -57,7 +58,8 @@
                             @selected(request('location') == $location->location_id)>{{ $location->name }}</option>
                     @endforeach
                 </select>
-                    <x-icons.chevron-right class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
+                <x-icons.chevron-right
+                    class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
             </div>
         </div>
 
@@ -70,7 +72,8 @@
             <div class="relative mt-3">
                 <input type="text" id="date-range" readonly placeholder="Semua Tanggal"
                     class="w-full cursor-pointer appearance-none rounded-control border-[0.5px] border-line bg-white py-2.5 pl-3 pr-10 text-body outline-none placeholder:text-black/40 focus:border-primary" />
-                    <x-icons.chevron-right class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
+                <x-icons.chevron-right
+                    class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
                 <input type="hidden" name="date_from" value="{{ request('date_from') }}" />
                 <input type="hidden" name="date_to" value="{{ request('date_to') }}" />
             </div>
@@ -112,7 +115,8 @@
                     </option>
                     <option value="closed" class="text-ink" @selected(request('status') == 'closed')>Ditutup</option>
                 </select>
-                    <x-icons.chevron-right class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
+                <x-icons.chevron-right
+                    class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
             </div>
         </div>
     </div>
@@ -122,9 +126,9 @@
             class="rounded-control border-[0.5px] border-line px-5 py-2.5 text-body font-semibold transition hover:border-black/40">
             Reset All
         </button>
-            <button type="submit"
-                class="flex-1 rounded-control bg-primary px-5 py-2.5 text-body font-semibold text-white transition hover:bg-primary/90">
-                Terapkan
-            </button>
+        <button type="submit"
+            class="flex-1 rounded-control bg-primary px-5 py-2.5 text-body font-semibold text-white transition hover:bg-primary/90">
+            Terapkan
+        </button>
     </div>
 </aside>
