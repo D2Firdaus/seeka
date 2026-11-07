@@ -34,10 +34,10 @@ test('the waiting page shows a resend countdown while the cooldown is active', f
         ->assertSee('Kirim ulang dalam');
 });
 
-test('unverified users are redirected to the waiting page from the beranda', function () {
+test('unverified users can still browse the beranda', function () {
     $this->actingAs(User::factory()->unverified()->create())
         ->get(route('home'))
-        ->assertRedirect(route('verification.notice'));
+        ->assertOk();
 });
 
 test('verified users skip the waiting page', function () {

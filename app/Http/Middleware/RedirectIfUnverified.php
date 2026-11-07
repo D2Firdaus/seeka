@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 class RedirectIfUnverified
 {
     /**
-     * Tahan pengguna yang sudah masuk tetapi belum aktivasi email di halaman verifikasi.
+     * Tahan pengguna yang belum aktivasi email dari aksi yang butuh verifikasi.
      *
-     * Tamu tetap bebas menjelajah; rute verifikasi, logout, dan register dikecualikan
-     * agar tidak redirect loop atau menghalangi pendaftaran.
+     * Browsing (beranda, dll) tetap boleh; verifikasi, logout, dan register
+     * dikecualikan agar tidak redirect loop.
      *
      * @param  Closure(Request): (Response)  $next
      */
@@ -23,7 +23,7 @@ class RedirectIfUnverified
 
         if ($user !== null
             && ! $user->hasVerifiedEmail()
-            && ! $request->routeIs('verification.*', 'logout')
+            && ! $request->routeIs('verification.*', 'logout', 'home')
             && ! $request->is('register', 'register/*')
         ) {
             return Redirect::route('verification.notice');
