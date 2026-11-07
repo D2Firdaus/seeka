@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->name('verification.notice');
     Route::get('/email/verify/success', [EmailVerificationController::class, 'success'])->name('verification.success');
-    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('throttle:1,1,verification')->name('verification.resend');
-    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
+    Route::get('/email/verify/expired', [EmailVerificationController::class, 'expired'])->name('verification.expired');
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->name('verification.resend');
+    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 });

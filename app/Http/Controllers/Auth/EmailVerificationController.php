@@ -29,9 +29,10 @@ class EmailVerificationController extends Controller
     {
         $user = $request->user();
 
-        if (! hash_equals((string) $user->getKey(), (string) $request->route('id'))
+        if (! $request->hasValidSignature()
+            || ! hash_equals((string) $user->getKey(), (string) $request->route('id'))
             || ! hash_equals($user->verificationHash(), (string) $request->route('hash'))) {
-            abort(403);
+            return redirect()->route('verification.expired');
         }
 
         if (! $user->hasVerifiedEmail()) {
@@ -58,7 +59,7 @@ class EmailVerificationController extends Controller
             $user->sendEmailVerificationNotification();
         }
 
-        return back();
+        return redirect()->route('verification.notice');
     }
 
     /**
@@ -71,5 +72,17 @@ class EmailVerificationController extends Controller
         }
 
         return view('auth.verify-success');
+    }
+
+    /**
+     * Tampilkan halaman link verifikasi kedaluwarsa.
+     */
+    public function expired(Request $request): View|RedirectResponse
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->route('home');
+        }
+
+        return view('auth.verify-expired');
     }
 }

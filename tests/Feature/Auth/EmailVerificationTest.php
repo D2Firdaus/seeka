@@ -71,14 +71,16 @@ test('resending within a minute does not send another activation email', functio
     Notification::assertNotSentTo($user, VerifyEmail::class);
 });
 
-test('resending the activation email is rate limited', function () {
+test('resending shows cooldown instead of rate limit error', function () {
     Notification::fake();
     $user = User::factory()->unverified()->create();
 
     $this->actingAs($user);
 
-    $this->post(route('verification.resend'))->assertRedirect();
-    $this->post(route('verification.resend'))->assertStatus(429);
+    $this->post(route('verification.resend'))->assertRedirect(route('verification.notice'));
+    $this->post(route('verification.resend'))->assertRedirect(route('verification.notice'));
+
+    Notification::assertSentTo($user, VerifyEmail::class, 1);
 });
 
 test('resending is ignored for an already verified account', function () {
@@ -127,7 +129,7 @@ test('an activation link is invalidated when a new verification email is sent', 
 
     $this->actingAs($user)->post(route('verification.resend'));
 
-    $this->actingAs($user)->get($oldUrl)->assertForbidden();
+    $this->actingAs($user)->get($oldUrl)->assertRedirect(route('verification.expired'));
     expect($user->fresh()->email_verified_at)->toBeNull();
 });
 
@@ -141,7 +143,7 @@ test('an activation link with the wrong hash is rejected', function () {
 
     $this->actingAs($user)
         ->get($url)
-        ->assertForbidden();
+        ->assertRedirect(route('verification.expired'));
 
     expect($user->fresh()->email_verified_at)->toBeNull();
 });
@@ -157,7 +159,7 @@ test('an activation link cannot be used by another account', function () {
 
     $this->actingAs($other)
         ->get($url)
-        ->assertForbidden();
+        ->assertRedirect(route('verification.expired'));
 
     expect($owner->fresh()->email_verified_at)->toBeNull();
 });
@@ -170,7 +172,7 @@ test('an unsigned activation link is rejected', function () {
             'id' => $user->getKey(),
             'hash' => $user->verificationHash(),
         ]))
-        ->assertForbidden();
+        ->assertRedirect(route('verification.expired'));
 
     expect($user->fresh()->email_verified_at)->toBeNull();
 });
@@ -200,4 +202,18 @@ test('the success page is hidden from unverified users', function () {
     $this->actingAs(User::factory()->unverified()->create())
         ->get(route('verification.success'))
         ->assertRedirect(route('verification.notice'));
+});
+
+test('the expired page shows the resend button', function () {
+    $this->actingAs(User::factory()->unverified()->create())
+        ->get(route('verification.expired'))
+        ->assertOk()
+        ->assertSee('Link Verifikasi Kedaluwarsa')
+        ->assertSee('Kirim Ulang Email');
+});
+
+test('the expired page is hidden from verified users', function () {
+    $this->actingAs(User::factory()->create())
+        ->get(route('verification.expired'))
+        ->assertRedirect(route('home'));
 });

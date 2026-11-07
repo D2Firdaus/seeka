@@ -12,7 +12,8 @@ class RedirectIfUnverified
     /**
      * Tahan pengguna yang sudah masuk tetapi belum aktivasi email di halaman verifikasi.
      *
-     * Tamu tetap bebas menjelajah; rute verifikasi dan logout dikecualikan agar tidak redirect loop.
+     * Tamu tetap bebas menjelajah; rute verifikasi, logout, dan register dikecualikan
+     * agar tidak redirect loop atau menghalangi pendaftaran.
      *
      * @param  Closure(Request): (Response)  $next
      */
@@ -20,7 +21,11 @@ class RedirectIfUnverified
     {
         $user = $request->user();
 
-        if ($user !== null && ! $user->hasVerifiedEmail() && ! $request->routeIs('verification.*', 'logout')) {
+        if ($user !== null
+            && ! $user->hasVerifiedEmail()
+            && ! $request->routeIs('verification.*', 'logout')
+            && ! $request->is('register', 'register/*')
+        ) {
             return Redirect::route('verification.notice');
         }
 
