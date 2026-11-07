@@ -24,7 +24,7 @@
                     <div>
                         <label for="email" class="mb-1.5 block text-body text-ink-soft">Email</label>
                         <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
-                            autocomplete="username" placeholder="npm@unsika.ac.id"
+                            autocomplete="username" placeholder="Masukkan email unsika"
                             class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-faint hover:border-black/40 focus:border-primary" />
                     </div>
 

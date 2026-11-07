@@ -24,15 +24,6 @@
     </header>
 
     @yield('content')
-
-    <footer class="w-full">
-        <div class="mx-auto w-full max-w-6xl px-5 py-6 sm:px-8">
-            <div class="mx-auto max-w-[440px] text-caption text-subtle">
-                &copy; {{ date('Y') }} {{ config('app.name', 'SEEKA') }}
-            </div>
-        </div>
-    </footer>
 </body>
 
 </html>
-
