@@ -28,3 +28,6 @@ Thumbs.db
 docs/
 .ai/
 agents.md
+
+database/seeka_db.sql
+public/__probe.html
