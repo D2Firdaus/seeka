@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 uses(RefreshDatabase::class);
 
@@ -22,15 +25,30 @@ test('registration creates the account and logs the user in', function () {
         'terms' => '1',
     ]);
 
-    $response->assertRedirect(route('home'));
+    $response->assertRedirect(route('verification.notice'));
     $this->assertAuthenticated();
     $this->assertDatabaseHas('users', [
         'name' => 'Dede Firdaus',
         'email' => '1234567890@student.unsika.ac.id',
         'nim_nip' => '1234567890',
+        'email_verified_at' => null,
         'notify_email' => true,
         'notify_whatsapp' => false,
     ]);
+});
+
+test('registration sends the activation email to the new user', function () {
+    Notification::fake();
+
+    $this->post(route('register'), [
+        'name' => 'Dede Firdaus',
+        'email' => 'dede@unsika.ac.id',
+        'password' => 'rahasia123',
+        'password_confirmation' => 'rahasia123',
+        'terms' => '1',
+    ])->assertRedirect(route('verification.notice'));
+
+    Notification::assertSentTo(User::first(), VerifyEmail::class);
 });
 
 test('registration leaves nim_nip empty for a name email prefix', function () {
@@ -42,7 +60,7 @@ test('registration leaves nim_nip empty for a name email prefix', function () {
         'terms' => '1',
     ]);
 
-    $response->assertRedirect(route('home'));
+    $response->assertRedirect(route('verification.notice'));
     $this->assertDatabaseHas('users', [
         'email' => 'budi@unsika.ac.id',
         'nim_nip' => null,
@@ -58,7 +76,7 @@ test('registration accepts unsika.ac.id campus emails', function (string $email)
         'terms' => '1',
     ]);
 
-    $response->assertRedirect(route('home'));
+    $response->assertRedirect(route('verification.notice'));
     $this->assertAuthenticated();
     $this->assertDatabaseHas('users', ['email' => $email]);
 })->with([
@@ -159,4 +177,74 @@ test('registration rejects a too short password', function () {
     $response->assertSessionHasErrors('password');
     expect(session('errors')->first('password'))->toBe('Kata sandi minimal 8 karakter.');
     $this->assertGuest();
+});
+
+test('re-registering an unverified account continues to the verification page', function () {
+    $user = User::factory()->unverified()->create([
+        'name' => 'Budi',
+        'email' => 'budi@unsika.ac.id',
+    ]);
+
+    $response = $this->post(route('register'), [
+        'name' => 'Budi Baru',
+        'email' => 'budi@unsika.ac.id',
+        'password' => 'rahasia999',
+        'password_confirmation' => 'rahasia999',
+        'terms' => '1',
+    ]);
+
+    $response->assertRedirect(route('verification.notice'));
+    $this->assertAuthenticatedAs($user);
+    $this->assertDatabaseCount('users', 1);
+    $this->assertDatabaseHas('users', [
+        'user_id' => $user->user_id,
+        'name' => 'Budi Baru',
+    ]);
+    expect(Hash::check('rahasia999', $user->fresh()->password))->toBeTrue();
+});
+
+test('re-registering an unverified account within a minute does not resend the activation email', function () {
+    Notification::fake();
+
+    $user = User::factory()->unverified()->create([
+        'email' => 'budi@unsika.ac.id',
+        'verification_sent_at' => now(),
+    ]);
+
+    $this->post(route('register'), [
+        'name' => 'Budi Santoso',
+        'email' => 'budi@unsika.ac.id',
+        'password' => 'rahasia123',
+        'password_confirmation' => 'rahasia123',
+        'terms' => '1',
+    ])->assertRedirect(route('verification.notice'));
+
+    Notification::assertNotSentTo($user, VerifyEmail::class);
+});
+
+test('re-registering an unverified account after a minute resends the activation email', function () {
+    Notification::fake();
+
+    $user = User::factory()->unverified()->create([
+        'email' => 'budi@unsika.ac.id',
+        'verification_sent_at' => now()->subSeconds(61),
+    ]);
+
+    $this->post(route('register'), [
+        'name' => 'Budi Santoso',
+        'email' => 'budi@unsika.ac.id',
+        'password' => 'rahasia123',
+        'password_confirmation' => 'rahasia123',
+        'terms' => '1',
+    ])->assertRedirect(route('verification.notice'));
+
+    Notification::assertSentTo($user, VerifyEmail::class);
+});
+
+test('registration attempts are rate limited', function () {
+    foreach (range(1, 10) as $attempt) {
+        $this->post(route('register'), [])->assertStatus(302);
+    }
+
+    $this->post(route('register'), [])->assertStatus(429);
 });

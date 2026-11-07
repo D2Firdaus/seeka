@@ -115,4 +115,17 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Email Logo
+    |--------------------------------------------------------------------------
+    |
+    | Absolute URL to the logo shown in email templates. It must be publicly
+    | accessible so mail clients such as Gmail can load it. Defaults to the
+    | application URL when not set.
+    |
+    */
+
+    'logo_url' => env('MAIL_LOGO_URL'),
+
 ];

@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -22,12 +22,17 @@ class RegisteredUserController extends Controller
 
     /**
      * Daftarkan pengguna baru lalu langsung masukkan.
+     *
+     * Email yang sudah punya akun namun belum diverifikasi diperlakukan sebagai
+     * pendaftaran ulang: data yang diisi menimpa akun lama, lalu pengguna
+     * diarahkan kembali ke halaman aktivasi email.
      */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email', 'regex:/@([\w-]+\.)*unsika\.ac\.id$/i'],
+            'email' => ['required', 'email', 'max:255', 'regex:/@([\w-]+\.)*unsika\.ac\.id$/i'],
+            // 'email' => ['required', 'email', 'max:255', ''],
             'password' => ['required', 'min:8', 'confirmed'],
             'terms' => ['accepted'],
         ], [
@@ -35,7 +40,6 @@ class RegisteredUserController extends Controller
             'name.max' => 'Nama maksimal 255 karakter.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
-            'email.unique' => 'Email sudah terdaftar.',
             'email.regex' => 'Email harus menggunakan domain unsika.ac.id.',
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min' => 'Kata sandi minimal 8 karakter.',
@@ -43,23 +47,52 @@ class RegisteredUserController extends Controller
             'terms.accepted' => 'Anda harus menyetujui syarat dan ketentuan serta kebijakan privasi.',
         ]);
 
-        $localPart = Str::before($validated['email'], '@');
+        $existing = User::withTrashed()->where('email', $validated['email'])->first();
 
-        $nimNip = preg_match('/^[0-9]{6,30}$/', $localPart) === 1
-            && User::where('nim_nip', $localPart)->doesntExist()
-                ? $localPart
-                : null;
+        if ($existing !== null && ($existing->trashed() || $existing->hasVerifiedEmail())) {
+            throw ValidationException::withMessages([
+                'email' => 'Email sudah terdaftar.',
+            ]);
+        }
+
+        if ($existing !== null) {
+            return $this->continueUnverifiedRegistration($request, $existing, $validated);
+        }
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'],
-            'nim_nip' => $nimNip,
+            'nim_nip' => User::nimNipFromEmail($validated['email']),
         ]);
 
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home'));
+        $user->sendEmailVerificationNotification();
+
+        return redirect()->route('verification.notice');
+    }
+
+    /**
+     * Timpa data akun yang belum diverifikasi lalu kembalikan ke halaman aktivasi.
+     *
+     * @param  array<string, mixed>  $validated
+     */
+    private function continueUnverifiedRegistration(Request $request, User $user, array $validated): RedirectResponse
+    {
+        $user->forceFill([
+            'name' => $validated['name'],
+            'password' => $validated['password'],
+        ])->save();
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        if ($user->verificationCooldownRemaining() === 0) {
+            $user->sendEmailVerificationNotification();
+        }
+
+        return redirect()->route('verification.notice');
     }
 }
