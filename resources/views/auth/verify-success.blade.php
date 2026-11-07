@@ -19,7 +19,7 @@
                 </p>
 
                 <div class="mt-8 flex flex-wrap items-center justify-center gap-x-4 text-body">
-                    <span class="text-muted">Dalam <span id="countdown-seconds">5</span> Detik</span>
+                    <span class="text-muted">Dalam <span class="font-semibold text-primary"><span id="countdown-seconds">5</span> Detik</span></span>
 
                     <span class="text-subtle">atau</span>
 

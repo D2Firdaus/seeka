@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -21,17 +20,15 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Daftarkan pengguna baru lalu langsung masukkan.
+     * Daftarkan pengguna baru lalu arahkan ke halaman aktivasi email.
      *
-     * Email yang sudah punya akun namun belum diverifikasi diperlakukan sebagai
-     * pendaftaran ulang: data yang diisi menimpa akun lama, lalu pengguna
-     * diarahkan kembali ke halaman aktivasi email.
+     * Pengguna tidak langsung masuk — akun aktif setelah email diverifikasi.
      */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'regex:/@([\w-]+\.)*unsika\.ac\.id$/i'],
+            'email' => ['required', 'email', 'max:255', 'regex:/@([\w-]+\.)*\bunsika\.ac\.id$/i'],
             // 'email' => ['required', 'email', 'max:255', ''],
             'password' => ['required', 'min:8', 'confirmed'],
             'terms' => ['accepted'],
@@ -66,16 +63,15 @@ class RegisteredUserController extends Controller
             'nim_nip' => User::nimNipFromEmail($validated['email']),
         ]);
 
-        Auth::login($user);
-        $request->session()->regenerate();
-
         $user->sendEmailVerificationNotification();
+
+        $request->session()->put('pending_verification_email', $validated['email']);
 
         return redirect()->route('verification.notice');
     }
 
     /**
-     * Timpa data akun yang belum diverifikasi lalu kembalikan ke halaman aktivasi.
+     * Timpa data akun yang belum diverifikasi lalu kirim ulang email aktivasi.
      *
      * @param  array<string, mixed>  $validated
      */
@@ -86,12 +82,11 @@ class RegisteredUserController extends Controller
             'password' => $validated['password'],
         ])->save();
 
-        Auth::login($user);
-        $request->session()->regenerate();
-
         if ($user->verificationCooldownRemaining() === 0) {
             $user->sendEmailVerificationNotification();
         }
+
+        $request->session()->put('pending_verification_email', $validated['email']);
 
         return redirect()->route('verification.notice');
     }
