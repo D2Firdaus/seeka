@@ -18,6 +18,28 @@ test('beranda shows the reported items', function () {
         ->assertSee('Dompet Hitam');
 });
 
+test('beranda shows the first photo of an item', function () {
+    $item = Item::factory()->create(['title' => 'Kunci Motor']);
+    $item->images()->createMany([
+        ['path' => 'items/first.png', 'sort_order' => 0],
+        ['path' => 'items/second.png', 'sort_order' => 1],
+    ]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('storage/items/first.png', false)
+        ->assertDontSee('storage/items/second.png', false);
+});
+
+test('beranda shows the placeholder when the item has no photo', function () {
+    Item::factory()->create(['title' => 'Dompet Hitam']);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('Dompet Hitam')
+        ->assertDontSee('storage/items/', false);
+});
+
 test('search filters the item titles', function () {
     Item::factory()->create(['title' => 'Dompet Hitam']);
     Item::factory()->create(['title' => 'Kunci Motor']);

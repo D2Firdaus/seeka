@@ -21,7 +21,7 @@ class BerandaController extends Controller
         $perPage = in_array($requestedPerPage, [9, 18, 36], true) ? $requestedPerPage : 9;
 
         $items = Item::query()
-            ->with(['category', 'location'])
+            ->with(['category', 'location', 'images'])
             ->when($request->filled('q'), fn ($query) => $query->where('title', 'like', '%'.$request->string('q').'%'))
             ->when($request->filled('description'), fn ($query) => $query->where('description', 'like', '%'.$request->string('description').'%'))
             ->when($request->filled('category'), fn ($query) => $query->where('category_id', $request->integer('category')))
