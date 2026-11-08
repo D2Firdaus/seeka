@@ -1,5 +1,6 @@
 @php
     $type = is_string(request()->query('type')) ? request()->query('type') : '';
+    $isKehilanganPage = request()->routeIs('lapor.kehilangan');
 
     $tabClass = fn (bool $active) => [
         'items-center border-b-2 py-3 text-ink-soft',
@@ -41,11 +42,11 @@
     <div class="w-full border-b border-black/10">
         <div class="mx-auto w-full max-w-6xl px-5 sm:px-8">
             <nav class="flex items-stretch gap-x-5 text-body sm:gap-x-6">
-                <a href="{{ route('home') }}" @class($tabClass($type === ''))>
+                <a href="{{ route('home') }}" @class($tabClass($type === '' && ! $isKehilanganPage))>
                     Pencarian
                 </a>
 
-                <a href="#" @class([...$tabClass($type === 'lost'), 'hidden min-[300px]:flex'])>
+                <a href="{{ route('lapor.kehilangan') }}" @class([...$tabClass($type === 'lost' || $isKehilanganPage), 'hidden min-[300px]:flex'])>
                     Kehilangan
                 </a>
 
@@ -63,7 +64,7 @@
                         </summary>
 
                         <div class="absolute right-0 z-30 mt-1 w-44 rounded-control border-[0.5px] border-line bg-white py-1.5 shadow-lg">
-                            <a href="#" @class([...$menuItemClass($type === 'lost'), 'min-[300px]:hidden'])>
+                            <a href="{{ route('lapor.kehilangan') }}" @class([...$menuItemClass($type === 'lost' || $isKehilanganPage), 'min-[300px]:hidden'])>
                                 Kehilangan
                             </a>
                             <a href="#" @class([...$menuItemClass($type === 'found'), 'min-[380px]:hidden'])>
