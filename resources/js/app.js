@@ -108,3 +108,125 @@ document.addEventListener('click', (event) => {
         if (select) select.selectedIndex = 0;
     }
 });
+
+const MAX_PHOTOS = 3;
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+const PHOTO_TYPES = ['image/jpeg', 'image/png'];
+
+const photoFiles = [];
+const photoUrls = [];
+
+function renderPhotoPreviews() {
+    const container = document.getElementById('photo-previews');
+    const template = document.getElementById('photo-preview-template');
+    const input = document.getElementById('photos');
+
+    if (!container || !template || !(input instanceof HTMLInputElement)) {
+        return;
+    }
+
+    photoUrls.forEach((url) => URL.revokeObjectURL(url));
+    photoUrls.length = 0;
+    container.replaceChildren();
+
+    photoFiles.forEach((file, index) => {
+        const url = URL.createObjectURL(file);
+        photoUrls.push(url);
+
+        const node = template.content.firstElementChild.cloneNode(true);
+        const image = node.querySelector('img');
+        image.src = url;
+        image.alt = file.name;
+        node.querySelector('[data-photo-name]').textContent = file.name;
+        node.querySelector('[data-photo-remove]').dataset.photoRemove = String(index);
+        container.appendChild(node);
+    });
+
+    container.classList.toggle('hidden', photoFiles.length === 0);
+
+    const count = document.getElementById('photo-count');
+    if (count) {
+        count.textContent = photoFiles.length > 0 ? `${photoFiles.length}/${MAX_PHOTOS}` : '';
+    }
+
+    const full = photoFiles.length >= MAX_PHOTOS;
+    const label = document.getElementById('photo-picker-label');
+    if (label) {
+        label.classList.toggle('pointer-events-none', full);
+        label.classList.toggle('opacity-50', full);
+    }
+}
+
+function syncPhotoInput() {
+    const input = document.getElementById('photos');
+    if (!(input instanceof HTMLInputElement)) {
+        return;
+    }
+
+    const transfer = new DataTransfer();
+    photoFiles.forEach((file) => transfer.items.add(file));
+    input.files = transfer.files;
+}
+
+document.addEventListener('change', (event) => {
+    const input = event.target;
+
+    if (!(input instanceof HTMLInputElement) || input.id !== 'photos') {
+        return;
+    }
+
+    const error = document.getElementById('photo-error');
+    const messages = [];
+
+    for (const file of input.files) {
+        if (!PHOTO_TYPES.includes(file.type)) {
+            messages.push(`"${file.name}" harus JPG atau PNG.`);
+            continue;
+        }
+
+        if (file.size > MAX_PHOTO_BYTES) {
+            messages.push(`"${file.name}" melebihi 5 MB.`);
+            continue;
+        }
+
+        const duplicate = photoFiles.some((existing) =>
+            existing.name === file.name && existing.size === file.size && existing.lastModified === file.lastModified);
+
+        if (duplicate) {
+            continue;
+        }
+
+        if (photoFiles.length >= MAX_PHOTOS) {
+            messages.push(`Maksimal ${MAX_PHOTOS} foto.`);
+            break;
+        }
+
+        photoFiles.push(file);
+    }
+
+    if (error) {
+        error.textContent = messages.join(' ');
+        error.classList.toggle('hidden', messages.length === 0);
+    }
+
+    syncPhotoInput();
+    renderPhotoPreviews();
+});
+
+document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-photo-remove]');
+
+    if (!button) {
+        return;
+    }
+
+    const index = Number(button.dataset.photoRemove);
+
+    if (!Number.isInteger(index) || index < 0 || index >= photoFiles.length) {
+        return;
+    }
+
+    photoFiles.splice(index, 1);
+    syncPhotoInput();
+    renderPhotoPreviews();
+});
