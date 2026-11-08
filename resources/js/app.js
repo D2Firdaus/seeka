@@ -155,7 +155,6 @@ function renderPhotoPreviews() {
         label.classList.toggle('pointer-events-none', full);
         label.classList.toggle('opacity-50', full);
     }
-    input.disabled = full;
 }
 
 function syncPhotoInput() {

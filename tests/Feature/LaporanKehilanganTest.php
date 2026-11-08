@@ -52,6 +52,8 @@ test('lost report form renders the report fields', function () {
 });
 
 test('submitting the form creates an open lost report', function () {
+    Storage::fake('public');
+
     $user = User::factory()->create();
     $category = Category::factory()->create();
     $location = Location::factory()->create();
@@ -63,6 +65,7 @@ test('submitting the form creates an open lost report', function () {
         'date_event' => now()->subDay()->toDateString(),
         'description' => 'Dompet hitam dengan struk parkir di dalamnya.',
         'declaration' => '1',
+        'photos' => [fakePhoto('dompet.png')],
     ]);
 
     $response->assertRedirect(route('home'));
@@ -81,6 +84,8 @@ test('submitting the form creates an open lost report', function () {
 });
 
 test('successful report shows the success message on the home page', function () {
+    Storage::fake('public');
+
     $category = Category::factory()->create();
     $location = Location::factory()->create();
 
@@ -91,6 +96,7 @@ test('successful report shows the success message on the home page', function ()
         'date_event' => now()->subDay()->toDateString(),
         'description' => 'Dompet hitam dengan struk parkir di dalamnya.',
         'declaration' => '1',
+        'photos' => [fakePhoto('dompet.png')],
     ]);
 
     $this->get(route('home'))
@@ -125,6 +131,45 @@ test('photos are stored with the report', function () {
     }
 });
 
+test('three photos are stored with the report', function () {
+    Storage::fake('public');
+
+    $category = Category::factory()->create();
+    $location = Location::factory()->create();
+
+    $this->actingAs(User::factory()->create())->post(route('lapor.kehilangan'), [
+        'title' => 'Dompet hitam',
+        'category_id' => $category->category_id,
+        'location_id' => $location->location_id,
+        'date_event' => now()->subDay()->toDateString(),
+        'description' => 'Dompet hitam dengan struk parkir di dalamnya.',
+        'declaration' => '1',
+        'photos' => [fakePhoto('a.png'), fakePhoto('b.png'), fakePhoto('c.png')],
+    ]);
+
+    $this->assertDatabaseCount('item_images', 3);
+});
+
+test('a report requires at least one photo', function () {
+    $category = Category::factory()->create();
+    $location = Location::factory()->create();
+
+    $response = $this->actingAs(User::factory()->create())->post(route('lapor.kehilangan'), [
+        'title' => 'Dompet hitam',
+        'category_id' => $category->category_id,
+        'location_id' => $location->location_id,
+        'date_event' => now()->subDay()->toDateString(),
+        'description' => 'Dompet hitam dengan struk parkir di dalamnya.',
+        'declaration' => '1',
+    ]);
+
+    $response->assertSessionHasErrors([
+        'photos' => 'Foto barang wajib diunggah.',
+    ]);
+
+    $this->assertDatabaseCount('items', 0);
+});
+
 test('submitting an empty form shows validation errors', function () {
     $response = $this->actingAs(User::factory()->create())
         ->post(route('lapor.kehilangan'), []);
@@ -136,6 +181,7 @@ test('submitting an empty form shows validation errors', function () {
         'date_event',
         'description',
         'declaration',
+        'photos',
     ]);
 
     $this->assertDatabaseCount('items', 0);
@@ -238,6 +284,8 @@ test('more than three photos are rejected', function () {
 });
 
 test('hidden detail and storage location cannot be submitted through the form', function () {
+    Storage::fake('public');
+
     $user = User::factory()->create();
     $category = Category::factory()->create();
     $location = Location::factory()->create();
@@ -249,6 +297,7 @@ test('hidden detail and storage location cannot be submitted through the form', 
         'date_event' => now()->subDay()->toDateString(),
         'description' => 'Dompet hitam dengan struk parkir di dalamnya.',
         'declaration' => '1',
+        'photos' => [fakePhoto('dompet.png')],
         'hidden_detail' => 'Ciri khusus yang tidak boleh tersimpan',
         'storage_location' => 'Gudang petugas',
     ]);

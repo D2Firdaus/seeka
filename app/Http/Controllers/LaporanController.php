@@ -35,7 +35,7 @@ class LaporanController extends Controller
             'date_event' => ['required', 'date', 'before_or_equal:today'],
             'description' => ['required', 'string'],
             'declaration' => ['accepted'],
-            'photos' => ['nullable', 'array', 'max:3'],
+            'photos' => ['required', 'array', 'min:1', 'max:3'],
             'photos.*' => ['image', 'mimes:jpg,jpeg,png', 'max:5120'],
         ], [
             'title.required' => 'Nama barang wajib diisi.',
@@ -49,11 +49,14 @@ class LaporanController extends Controller
             'date_event.before_or_equal' => 'Tanggal kehilangan tidak boleh di masa depan.',
             'description.required' => 'Deskripsi barang wajib diisi.',
             'declaration.accepted' => 'Anda harus menyatakan informasi dalam laporan ini benar adanya.',
+            'photos.required' => 'Foto barang wajib diunggah.',
+            'photos.min' => 'Minimal 1 foto.',
             'photos.array' => 'Format foto tidak valid.',
             'photos.max' => 'Maksimal 3 foto.',
             'photos.*.image' => 'File harus berupa gambar.',
             'photos.*.mimes' => 'Foto harus berformat JPG atau PNG.',
             'photos.*.max' => 'Ukuran foto maksimal 5 MB per foto.',
+            'photos.*.uploaded' => 'Foto gagal diunggah, coba dengan file yang lebih kecil.',
         ]);
 
         DB::transaction(function () use ($request, $validated): void {
