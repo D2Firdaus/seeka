@@ -48,7 +48,7 @@
        ukuran font browser pengguna.
 
        Pemakaian: font-family tidak bisa ikut di token --text-*, jadi
-       judul memakai pasangan kelas:  text-display font-display
+       judul memakai pasangan kelas: text-display font-display
        ====================================================================== */
 
     --text-display: clamp(1.7108rem, 1.4531rem + 1.1454vw, 2.3694rem);
@@ -98,7 +98,8 @@
     /* Judul seimbang antar baris */
     .text-display,
     .text-headline,
-    .text-title {
+    .text-title,
+    .text-subtitle {
         text-wrap: balance;
     }
 }
