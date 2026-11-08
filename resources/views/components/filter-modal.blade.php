@@ -13,7 +13,7 @@
 <aside
     class="invisible fixed right-0 top-0 z-50 flex h-full w-full max-w-sm translate-x-full flex-col bg-white opacity-0 shadow-xl [transition:translate_300ms_ease-out,opacity_150ms_ease-out,visibility_300ms] peer-checked:visible peer-checked:translate-x-0 peer-checked:opacity-100">
     <div class="flex items-center justify-between border-b border-black/10 px-5 py-4">
-        <h2 class="text-subtitle font-semibold">Filter</h2>
+        <h2 class="text-heading">Filter</h2>
         <label for="filter-modal-toggle" class="cursor-pointer p-1" aria-label="Tutup filter">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                 aria-hidden="true">

@@ -11,7 +11,7 @@
                 <img src="{{ asset('images/seeka-cry.png') }}" alt="Verifikasi kedaluwarsa"
                     class="h-32 w-auto lg:h-40" />
 
-                <h1 class="mt-6 text-title">
+                <h1 class="mt-6 text-display">
                     Link Verifikasi Kedaluwarsa
                 </h1>
 

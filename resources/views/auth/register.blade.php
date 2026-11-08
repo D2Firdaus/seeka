@@ -6,11 +6,11 @@
     <main class="flex flex-1 items-start lg:items-center">
         <div class="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8 lg:py-10">
             <div class="mx-auto max-w-[440px]">
-                <h1 class="text-title">
+                <h1 class="text-display">
                     Buat Akun SEEKA
                 </h1>
 
-                <p class="mt-4 text-subtitle text-balance text-muted">
+                <p class="mt-4 text-title text-balance text-muted">
                     Bantu Barang Kembali Kepada Pemiliknya
                 </p>
 

@@ -12,7 +12,7 @@
                 </p>
             </div>
 
-            <h2 class="line-clamp-2 text-title lg:line-clamp-1 lg:text-subtitle lg:font-bold">{{ $item->title }}</h2>
+            <h2 class="line-clamp-2 text-title font-bold lg:line-clamp-1">{{ $item->title }}</h2>
 
             <p class="flex items-center gap-1.5 text-body text-ink-soft lg:text-caption">
                 <x-icons.map-pin class="h-4 w-4 shrink-0" />

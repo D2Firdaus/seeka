@@ -4,9 +4,9 @@
 
 @section('content')
     <main class="mx-auto w-full max-w-6xl flex-1 px-5 pb-16 pt-8 sm:px-8">
-        <h1 class="text-title">SEEKA</h1>
+        <h1 class="text-display">SEEKA</h1>
 
-        <p class="mt-3 max-w-md text-subtitle text-balance text-ink-soft">
+        <p class="mt-3 max-w-md text-title text-balance text-ink-soft">
             Bantu Barang Kembali Kepada Pemiliknya
         </p>
 
