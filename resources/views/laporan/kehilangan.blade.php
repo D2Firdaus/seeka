@@ -87,14 +87,30 @@
                     <div
                         class="flex flex-wrap items-center gap-4 rounded-control border-[0.5px] border-line bg-white px-4 py-4">
                         <x-icons.add-photo class="h-5 w-5 text-primary" />
-                        <p class="flex-1 text-body-sm text-ink-soft">JPG atau PNG Maks. 5 MB per foto hingga 3 foto</p>
-                        <label for="photos"
+                        <p class="flex-1 text-body-sm text-ink-soft">JPG atau PNG Maks. 5 MB per foto hingga 3 foto<span
+                                id="photo-count" class="ml-1 font-semibold text-ink"></span></p>
+                        <label id="photo-picker-label" for="photos"
                             class="cursor-pointer rounded-control border-[0.5px] border-line px-4 py-2 text-label text-ink transition hover:border-black/40">
                             Pilih Foto
                         </label>
                     </div>
                     <input id="photos" name="photos[]" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" multiple
                         class="sr-only" />
+                    <p id="photo-error" class="mt-2 hidden text-label text-primary"></p>
+                    <div id="photo-previews" class="mt-3 hidden grid grid-cols-2 gap-3 min-[380px]:grid-cols-3"></div>
+                    <template id="photo-preview-template">
+                        <div class="relative overflow-hidden rounded-control border-[0.5px] border-line bg-white">
+                            <img alt="" class="aspect-square w-full bg-black/5 object-cover" />
+                            <div class="flex items-center justify-between gap-2 px-2 py-1.5">
+                                <span class="min-w-0 truncate text-caption text-ink-soft" data-photo-name></span>
+                                <button type="button" data-photo-remove
+                                    class="shrink-0 rounded-control p-1 text-ink-soft transition hover:bg-black/5 hover:text-primary"
+                                    aria-label="Hapus foto">
+                                    <x-icons.close class="h-4 w-4" />
+                                </button>
+                            </div>
+                        </div>
+                    </template>
                 </div>
 
                 <label class="mt-6 flex items-start gap-2.5 text-body text-ink">
