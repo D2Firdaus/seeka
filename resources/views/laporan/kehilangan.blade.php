@@ -4,11 +4,11 @@
 
 @section('content')
     <main class="mx-auto w-full max-w-2xl flex-1 px-5 pb-16 pt-8 sm:px-8">
-        <h1 class="text-title">
+        <h1 class="text-display font-display">
             Laporan Kehilangan
         </h1>
 
-        <p class="mt-3 text-subtitle text-balance text-ink-soft">
+        <p class="mt-3 text-title font-display font-normal text-ink-soft">
             Kehilangan?, coba ceritakan detailnya agar lebih mudah dikenali
         </p>
 
@@ -21,14 +21,14 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label for="title" class="mb-1.5 block text-body font-semibold text-ink">Nama Barang<span
+                    <label for="title" class="mb-1.5 block text-label text-ink">Nama Barang<span
                             class="text-primary">*</span></label>
                     <input id="title" name="title" type="text" value="{{ old('title') }}" required autofocus
                         class="w-full rounded-control border-[0.5px] border-line bg-white px-3 py-2.5 text-body text-ink outline-none transition focus:border-primary" />
                 </div>
 
                 <div>
-                    <label for="category_id" class="mb-1.5 block text-body font-semibold text-ink">Kategori<span
+                    <label for="category_id" class="mb-1.5 block text-label text-ink">Kategori<span
                             class="text-primary">*</span></label>
                     <div class="relative">
                         <select id="category_id" name="category_id" required
@@ -46,7 +46,7 @@
             </div>
 
             <div class="mt-5">
-                <label for="description" class="mb-1.5 block text-body font-semibold text-ink">Deskripsi Barang<span
+                <label for="description" class="mb-1.5 block text-label text-ink">Deskripsi Barang<span
                         class="text-primary">*</span></label>
                 <textarea id="description" name="description" rows="5" required
                     class="w-full resize-none rounded-control border-[0.5px] border-line bg-white px-3 py-2.5 text-body text-ink outline-none transition focus:border-primary">{{ old('description') }}</textarea>
@@ -54,7 +54,7 @@
 
             <div class="mt-5 grid grid-cols-2 gap-4">
                 <div>
-                    <label for="location_id" class="mb-1.5 block text-body font-semibold text-ink">Lokasi Kehilangan<span
+                    <label for="location_id" class="mb-1.5 block text-label text-ink">Lokasi Kehilangan<span
                             class="text-primary">*</span></label>
                     <div class="relative">
                         <select id="location_id" name="location_id" required
@@ -71,7 +71,7 @@
                 </div>
 
                 <div>
-                    <label for="date_event" class="mb-1.5 block text-body font-semibold text-ink">Tanggal Kehilangan<span
+                    <label for="date_event" class="mb-1.5 block text-label text-ink">Tanggal Kehilangan<span
                             class="text-primary">*</span></label>
                     <input id="date_event" name="date_event" type="date" value="{{ old('date_event') }}" required
                         max="{{ now()->toDateString() }}"
@@ -80,12 +80,12 @@
             </div>
 
             <div class="mt-5">
-                <p class="mb-1.5 text-body font-semibold text-ink">Foto Barang</p>
+                <p class="mb-1.5 text-label text-ink">Foto Barang</p>
                 <div class="flex items-center gap-4 rounded-control border-[0.5px] border-line bg-white px-4 py-3">
                     <x-icons.add-photo class="h-10 w-10 text-primary" />
-                    <p class="flex-1 text-body text-ink-soft">JPG atau PNG Maks. 5 MB per foto hingga 3 foto</p>
+                    <p class="flex-1 text-body-sm text-ink-soft">JPG atau PNG Maks. 5 MB per foto hingga 3 foto</p>
                     <label for="photos"
-                        class="cursor-pointer rounded-control border-[0.5px] border-line px-4 py-2 text-body font-semibold text-ink transition hover:border-black/40">
+                        class="cursor-pointer rounded-control border-[0.5px] border-line px-4 py-2 text-label text-ink transition hover:border-black/40">
                         Pilih Foto
                     </label>
                 </div>
@@ -102,12 +102,12 @@
 
             <div class="mt-7 grid grid-cols-2 gap-4">
                 <a href="{{ route('home') }}"
-                    class="rounded-control border-[0.5px] border-line px-5 py-3 text-center text-body font-semibold text-ink transition hover:border-black/40">
+                    class="rounded-control border-[0.5px] border-line px-5 py-3 text-center text-label text-ink transition hover:border-black/40">
                     Batal
                 </a>
 
                 <button type="submit"
-                    class="rounded-control bg-primary px-5 py-3 text-body font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    class="rounded-control bg-primary px-5 py-3 text-label text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Lapor
                 </button>
             </div>
