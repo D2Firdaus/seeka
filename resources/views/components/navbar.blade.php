@@ -15,7 +15,7 @@
 @endphp
 
 <header class="w-full">
-    <div class="mx-auto w-full max-w-6xl px-5 sm:px-8">
+    <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div class="flex items-center justify-between gap-4 py-4">
             <a href="{{ route('home') }}" class="inline-block shrink-0" aria-label="{{ config('app.name', 'SEEKA') }} — beranda">
                 <img src="{{ asset('images/seeka-mark.svg') }}" alt="{{ config('app.name', 'SEEKA') }}" class="-my-1.5 h-14 w-14" />
@@ -40,7 +40,7 @@
     </div>
 
     <div class="w-full border-b border-black/10">
-        <div class="mx-auto w-full max-w-6xl px-5 sm:px-8">
+        <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
             <nav class="flex items-stretch gap-x-5 text-body sm:gap-x-6">
                 <a href="{{ route('home') }}" @class($tabClass($type === '' && ! $isKehilanganPage))>
                     Pencarian

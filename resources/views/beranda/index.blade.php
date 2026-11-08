@@ -3,7 +3,7 @@
 @section('title', 'Beranda ' . config('app.name', 'SEEKA'))
 
 @section('content')
-    <main class="mx-auto w-full max-w-6xl flex-1 px-5 pb-16 pt-8 sm:px-8">
+    <main class="mx-auto w-full max-w-7xl flex-1 px-5 pb-16 pt-8 sm:px-8">
         <h1 class="text-display font-display">SEEKA</h1>
 
         <p class="mt-3 max-w-md text-title font-display font-normal text-ink-soft">
@@ -80,11 +80,11 @@
             </form>
         </div>
 
-        <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             @forelse ($items as $item)
                 <x-item-card :item="$item" />
             @empty
-                <p class="text-body text-muted sm:col-span-2 lg:col-span-3">
+                <p class="text-body text-muted md:col-span-2 xl:col-span-3">
                     Belum ada laporan yang cocok dengan pencarianmu.
                 </p>
             @endforelse

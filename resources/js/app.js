@@ -1,4 +1,5 @@
-import flatpickr from 'flatpickr';
+import './card-title-sync.js';
+
 
 let datePicker;
 
