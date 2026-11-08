@@ -20,12 +20,12 @@
         @for ($page = $from; $page <= $to; $page++)
             @if ($page === $paginator->currentPage())
                 <span aria-current="page"
-                    class="inline-flex items-center justify-center rounded-control bg-primary px-3 py-2 text-body font-semibold text-white">
+                    class="inline-flex items-center justify-center rounded-control bg-primary px-3 py-2 text-label text-white">
                     {{ $page }}
                 </span>
             @else
                 <a href="{{ $paginator->url($page) }}" aria-label="Halaman {{ $page }}"
-                    class="inline-flex items-center justify-center rounded-control px-2 py-2 sm:px-3 text-body font-semibold text-ink transition hover:text-primary">
+                    class="inline-flex items-center justify-center rounded-control px-2 py-2 sm:px-3 text-label text-ink transition hover:text-primary">
                     {{ $page }}
                 </a>
             @endif

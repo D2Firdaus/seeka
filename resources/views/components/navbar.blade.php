@@ -31,7 +31,7 @@
                         <span class="truncate text-body font-bold text-ink">{{ auth()->user()->name }}</span>
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="shrink-0 rounded-control bg-primary px-5 py-2 text-body font-semibold text-white transition hover:bg-primary/90">
+                    <a href="{{ route('login') }}" class="shrink-0 rounded-control bg-primary px-5 py-2 text-label text-white transition hover:bg-primary/90">
                         Sign in
                     </a>
                 @endauth

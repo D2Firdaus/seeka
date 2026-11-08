@@ -10,7 +10,7 @@
             <div class="mx-auto flex w-full max-w-2xl flex-col items-center text-center">
                 <x-icons.email-send class="h-16 w-16 lg:h-24 lg:w-24" />
 
-                <h1 class="mt-6 text-title">
+                <h1 class="mt-6 text-display font-display">
                     Verifikasi Email Anda
                 </h1>
 
@@ -30,7 +30,7 @@
 
                         <button type="submit" data-resend-cooldown="{{ $cooldown }}"
                             @disabled($cooldown > 0)
-                            class="rounded-control bg-primary px-5 py-3 text-body font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-60">
+                            class="rounded-control bg-primary px-5 py-3 text-label text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-60">
                             <span data-resend-label>
                                 {{ $cooldown > 0 ? "Kirim ulang dalam {$cooldown} detik" : 'Kirim Ulang Email' }}
                             </span>
@@ -38,7 +38,7 @@
                     </form>
 
                     <a href="{{ route('home') }}"
-                        class="inline-flex items-center gap-1 text-body font-semibold text-primary transition hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                        class="inline-flex items-center gap-1 text-label text-primary transition hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         Kembali Ke Beranda
                         <x-icons.chevron-right class="h-3 w-3" />
                     </a>

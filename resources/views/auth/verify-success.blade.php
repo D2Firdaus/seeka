@@ -10,7 +10,7 @@
             <div class="mx-auto flex w-full max-w-2xl flex-col items-center text-center">
                 <x-icons.email-success class="h-16 w-16 lg:h-24 lg:w-24" />
 
-                <h1 class="mt-6 text-title">
+                <h1 class="mt-6 text-display font-display">
                     Email Terverifikasi
                 </h1>
 
