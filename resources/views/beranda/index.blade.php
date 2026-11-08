@@ -4,14 +4,14 @@
 
 @section('content')
     <main class="mx-auto w-full max-w-6xl flex-1 px-5 pb-16 pt-8 sm:px-8">
-        <h1 class="text-display">SEEKA</h1>
+        <h1 class="text-display font-display">SEEKA</h1>
 
-        <p class="mt-3 max-w-md text-title text-balance text-ink-soft">
+        <p class="mt-3 max-w-md text-title font-display font-normal text-ink-soft">
             Bantu Barang Kembali Kepada Pemiliknya
         </p>
 
         <a href="#"
-            class="mt-5 inline-flex items-center gap-2 rounded-control border-[0.5px] border-line bg-white px-4 py-2 text-body font-semibold transition hover:border-black/40">
+            class="mt-5 inline-flex items-center gap-2 rounded-control border-[0.5px] border-line bg-white px-4 py-2 text-label transition hover:border-black/40">
             <x-icons.book class="h-5 w-5" />
             Panduan
         </a>
@@ -23,14 +23,14 @@
                         class="w-full min-w-0 rounded-l-control border-[0.5px] border-r-0 border-line bg-white px-3.5 py-3 text-body outline-none transition hover:border-black/40 focus:border-primary" />
 
                     <button type="submit"
-                        class="flex shrink-0 items-center justify-center gap-2 rounded-r-control bg-primary px-5 py-3 text-body font-semibold text-white transition hover:bg-primary/90">
+                        class="flex shrink-0 items-center justify-center gap-2 rounded-r-control bg-primary px-5 py-3 text-label text-white transition hover:bg-primary/90">
                         <x-icons.search class="h-5 w-5" />
                         <span class="hidden sm:inline">Cari</span>
                     </button>
                 </div>
 
                 <label for="filter-modal-toggle"
-                    class="flex h-11 cursor-pointer items-center gap-2 rounded-control bg-primary px-4 text-body font-semibold text-white transition hover:bg-primary/90 lg:h-[3.125rem]">
+                    class="flex h-11 cursor-pointer items-center gap-2 rounded-control bg-primary px-4 text-label text-white transition hover:bg-primary/90 lg:h-[3.125rem]">
                     Filter
                     <x-icons.filter class="h-5 w-5" />
                 </label>
@@ -43,11 +43,11 @@
         </form>
 
         <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <p class="hidden min-[512px]:block text-body text-muted">
+            <p class="hidden min-[512px]:block text-body-sm text-muted">
                 Menampilkan {{ $items->firstItem() ?? 0 }}–{{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
             </p>
 
-            <p class="min-[512px]:hidden text-body text-muted">
+            <p class="min-[512px]:hidden text-body-sm text-muted">
                 {{ $items->firstItem() ?? 0 }}–{{ $items->lastItem() ?? 0 }}<span
                     class="hidden min-[360px]:inline"> dari {{ $items->total() }}</span> data
             </p>
@@ -62,7 +62,7 @@
                     @endforeach
                 @endforeach
 
-                <label for="per_page" class="text-body text-ink-soft"><span
+                <label for="per_page" class="text-label text-ink-soft"><span
                         class="hidden min-[512px]:inline">Data per halaman</span><span
                         class="min-[512px]:hidden">Menampilkan</span></label>
 

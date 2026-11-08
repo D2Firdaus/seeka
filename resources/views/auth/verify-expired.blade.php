@@ -11,7 +11,7 @@
                 <img src="{{ asset('images/seeka-cry.png') }}" alt="Verifikasi kedaluwarsa"
                     class="h-32 w-auto lg:h-40" />
 
-                <h1 class="mt-6 text-display">
+                <h1 class="mt-6 text-display font-display">
                     Link Verifikasi Kedaluwarsa
                 </h1>
 
@@ -24,7 +24,7 @@
                     @csrf
 
                     <button type="submit"
-                        class="rounded-control bg-primary px-6 py-3 text-body font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                        class="rounded-control bg-primary px-6 py-3 text-label text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         Kirim Ulang Email
                     </button>
                 </form>

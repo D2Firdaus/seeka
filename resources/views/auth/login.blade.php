@@ -6,11 +6,11 @@
     <main class="flex flex-1 items-start lg:items-center">
         <div class="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8 lg:py-10">
             <div class="mx-auto max-w-[440px]">
-                <h1 class="text-display">
+                <h1 class="text-display font-display">
                     Login SEEKA
                 </h1>
 
-                <p class="mt-4 text-title text-balance text-muted">
+                <p class="mt-4 text-title font-display font-normal text-muted">
                     Bantu barang kembali kepada pemiliknya.
                 </p>
 
@@ -22,7 +22,7 @@
                     @csrf
 
                     <div>
-                        <label for="email" class="mb-1.5 block text-body text-ink-soft">Email</label>
+                        <label for="email" class="mb-1.5 block text-label text-ink-soft">Email</label>
                         <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
                             autocomplete="username" placeholder="Masukkan email unsika"
                             class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-faint hover:border-black/40 focus:border-primary" />
@@ -30,11 +30,11 @@
 
                     <div class="mt-5">
                         <div class="mb-1.5 flex items-baseline justify-between gap-3">
-                            <label for="password" class="text-body text-ink-soft">Kata Sandi</label>
+                            <label for="password" class="text-label text-ink-soft">Kata Sandi</label>
 
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}"
-                                    class="text-body font-medium text-primary underline-offset-4 hover:underline">
+                                    class="text-label text-primary underline-offset-4 hover:underline">
                                     Lupa kata sandi?
                                 </a>
                             @endif
@@ -55,19 +55,19 @@
                     </div>
 
                     <button type="submit"
-                        class="mt-7 w-full rounded-control bg-primary px-5 py-3.5 text-body font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                        class="mt-7 w-full rounded-control bg-primary px-5 py-3.5 text-label text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         Masuk
                     </button>
                 </form>
 
                 <div class="mt-6 flex items-center gap-3">
                     <span class="h-px flex-1 bg-black/10"></span>
-                    <span class="text-caption text-muted">Atau masuk dengan</span>
+                    <span class="text-body-sm text-muted">Atau masuk dengan</span>
                     <span class="h-px flex-1 bg-black/10"></span>
                 </div>
 
                 <a href="{{ route('google.login') }}"
-                    class="mt-4 flex w-full items-center justify-center gap-2.5 rounded-control border-[0.5px] border-line bg-white px-5 py-3.5 text-body font-semibold text-ink transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    class="mt-4 flex w-full items-center justify-center gap-2.5 rounded-control border-[0.5px] border-line bg-white px-5 py-3.5 text-label text-ink transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="#4285F4"
                             d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.86c2.26-2.09 3.56-5.17 3.56-8.87z" />

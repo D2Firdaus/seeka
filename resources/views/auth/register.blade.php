@@ -6,11 +6,11 @@
     <main class="flex flex-1 items-start lg:items-center">
         <div class="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8 lg:py-10">
             <div class="mx-auto max-w-[440px]">
-                <h1 class="text-display">
+                <h1 class="text-display font-display">
                     Buat Akun SEEKA
                 </h1>
 
-                <p class="mt-4 text-title text-balance text-muted">
+                <p class="mt-4 text-title font-display font-normal text-muted">
                     Bantu Barang Kembali Kepada Pemiliknya
                 </p>
 
@@ -22,21 +22,21 @@
                     @csrf
 
                     <div>
-                        <label for="name" class="mb-1.5 block text-body text-ink-soft">Nama Lengkap</label>
+                        <label for="name" class="mb-1.5 block text-label text-ink-soft">Nama Lengkap</label>
                         <input id="name" name="name" type="text" value="{{ old('name') }}" required autofocus
                             autocomplete="name" placeholder="Masukkan nama lengkap"
                             class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-faint hover:border-black/40 focus:border-primary" />
                     </div>
 
                     <div class="mt-5">
-                        <label for="email" class="mb-1.5 block text-body text-ink-soft">Email</label>
+                        <label for="email" class="mb-1.5 block text-label text-ink-soft">Email</label>
                         <input id="email" name="email" type="email" value="{{ old('email') }}" required
                             autocomplete="username" placeholder="Masukkan email unsika"
                             class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-faint hover:border-black/40 focus:border-primary" />
                     </div>
 
                     <div class="mt-5">
-                        <label for="password" class="mb-1.5 block text-body text-ink-soft">Kata Sandi</label>
+                        <label for="password" class="mb-1.5 block text-label text-ink-soft">Kata Sandi</label>
                         <div class="relative">
                             <input id="password" name="password" type="password" required autocomplete="new-password"
                                 placeholder="Minimal 8 karakter"
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="mt-5">
-                        <label for="password_confirmation" class="mb-1.5 block text-body text-ink-soft">Konfirmasi Kata
+                        <label for="password_confirmation" class="mb-1.5 block text-label text-ink-soft">Konfirmasi Kata
                             Sandi</label>
                         <input id="password_confirmation" name="password_confirmation" type="password" required
                             autocomplete="new-password" placeholder="Ulangi kata sandi"
@@ -67,7 +67,7 @@
                     </label>
 
                     <button type="submit"
-                        class="mt-7 w-full rounded-control bg-primary px-5 py-3.5 text-body font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                        class="mt-7 w-full rounded-control bg-primary px-5 py-3.5 text-label text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         Daftar
                     </button>
                 </form>
