@@ -19,20 +19,20 @@
         <form method="POST" action="{{ route('lapor.kehilangan') }}" enctype="multipart/form-data" class="mt-8">
             @csrf
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 min-[380px]:grid-cols-2 gap-4">
                 <div>
-                    <label for="title" class="mb-1.5 block text-label text-ink">Nama Barang<span
+                    <label for="title" class="mb-2 block text-label text-ink">Nama Barang<span
                             class="text-primary">*</span></label>
                     <input id="title" name="title" type="text" value="{{ old('title') }}" required autofocus
-                        class="w-full rounded-control border-[0.5px] border-line bg-white px-3 py-2.5 text-body text-ink outline-none transition focus:border-primary" />
+                        class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition focus:border-primary" />
                 </div>
 
                 <div>
-                    <label for="category_id" class="mb-1.5 block text-label text-ink">Kategori<span
+                    <label for="category_id" class="mb-2 block text-label text-ink">Kategori<span
                             class="text-primary">*</span></label>
                     <div class="relative">
                         <select id="category_id" name="category_id" required
-                            class="w-full appearance-none rounded-control border-[0.5px] border-line bg-white py-2.5 pl-3 pr-10 text-body text-ink outline-none transition has-[option[value='']:checked]:text-black/40 focus:border-primary">
+                            class="w-full appearance-none rounded-control border-[0.5px] border-line bg-white py-3 pl-3.5 pr-10 text-body text-ink outline-none transition has-[option[value='']:checked]:text-black/40 focus:border-primary">
                             <option value="" class="text-ink">Pilih Kategori</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->category_id }}" class="text-ink"
@@ -45,20 +45,20 @@
                 </div>
             </div>
 
-            <div class="mt-5">
-                <label for="description" class="mb-1.5 block text-label text-ink">Deskripsi Barang<span
+            <div class="mt-6">
+                <label for="description" class="mb-2 block text-label text-ink">Deskripsi Barang<span
                         class="text-primary">*</span></label>
                 <textarea id="description" name="description" rows="5" required
-                    class="w-full resize-none rounded-control border-[0.5px] border-line bg-white px-3 py-2.5 text-body text-ink outline-none transition focus:border-primary">{{ old('description') }}</textarea>
+                    class="w-full resize-none rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition focus:border-primary">{{ old('description') }}</textarea>
             </div>
 
-            <div class="mt-5 grid grid-cols-2 gap-4">
+            <div class="mt-6 grid grid-cols-1 min-[380px]:grid-cols-2 gap-4">
                 <div>
-                    <label for="location_id" class="mb-1.5 block text-label text-ink">Lokasi Kehilangan<span
+                    <label for="location_id" class="mb-2 block text-label text-ink">Lokasi Kehilangan<span
                             class="text-primary">*</span></label>
                     <div class="relative">
                         <select id="location_id" name="location_id" required
-                            class="w-full appearance-none rounded-control border-[0.5px] border-line bg-white py-2.5 pl-3 pr-10 text-body text-ink outline-none transition has-[option[value='']:checked]:text-black/40 focus:border-primary">
+                            class="w-full appearance-none rounded-control border-[0.5px] border-line bg-white py-3 pl-3.5 pr-10 text-body text-ink outline-none transition has-[option[value='']:checked]:text-black/40 focus:border-primary">
                             <option value="" class="text-ink">Pilih Lokasi</option>
                             @foreach ($locations as $location)
                                 <option value="{{ $location->location_id }}" class="text-ink"
@@ -71,17 +71,17 @@
                 </div>
 
                 <div>
-                    <label for="date_event" class="mb-1.5 block text-label text-ink">Tanggal Kehilangan<span
+                    <label for="date_event" class="mb-2 block text-label text-ink">Tanggal Kehilangan<span
                             class="text-primary">*</span></label>
                     <input id="date_event" name="date_event" type="date" value="{{ old('date_event') }}" required
                         max="{{ now()->toDateString() }}"
-                        class="w-full rounded-control border-[0.5px] border-line bg-white px-3 py-2.5 text-body text-ink outline-none transition focus:border-primary" />
+                        class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition focus:border-primary" />
                 </div>
             </div>
 
-            <div class="mt-5">
-                <p class="mb-1.5 text-label text-ink">Foto Barang</p>
-                <div class="flex items-center gap-4 rounded-control border-[0.5px] border-line bg-white px-4 py-3">
+            <div class="mt-6">
+                <p class="mb-2 text-label text-ink">Foto Barang</p>
+                <div class="flex flex-wrap items-center gap-4 rounded-control border-[0.5px] border-line bg-white px-4 py-4">
                     <x-icons.add-photo class="h-10 w-10 text-primary" />
                     <p class="flex-1 text-body-sm text-ink-soft">JPG atau PNG Maks. 5 MB per foto hingga 3 foto</p>
                     <label for="photos"
@@ -93,21 +93,21 @@
                     class="sr-only" />
             </div>
 
-            <label class="mt-5 flex items-start gap-2.5 text-body text-ink">
+            <label class="mt-6 flex items-start gap-2.5 text-body text-ink">
                 <input type="checkbox" name="declaration" value="1" required @checked(old('declaration'))
                     class="mt-1 h-4 w-4 rounded-control border-line accent-primary" />
                 <span>Saya Menyatakan Informasi Dalam Laporan Ini Benar Adanya dan Dapat
                     Dipertanggungjawabkan.<span class="text-primary">*</span></span>
             </label>
 
-            <div class="mt-7 grid grid-cols-2 gap-4">
+            <div class="mt-8 grid grid-cols-1 min-[380px]:grid-cols-2 gap-4">
                 <a href="{{ route('home') }}"
-                    class="rounded-control border-[0.5px] border-line px-5 py-3 text-center text-label text-ink transition hover:border-black/40">
+                    class="rounded-control border-[0.5px] border-line px-5 py-3.5 text-center text-label text-ink transition hover:border-black/40">
                     Batal
                 </a>
 
                 <button type="submit"
-                    class="rounded-control bg-primary px-5 py-3 text-label text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    class="rounded-control bg-primary px-5 py-3.5 text-label text-white transition hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                     Lapor
                 </button>
             </div>
