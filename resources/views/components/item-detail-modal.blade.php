@@ -56,24 +56,31 @@
             {{-- Image gallery --}}
             @if ($images->isNotEmpty())
                 <div class="mt-4 px-5" data-gallery>
-                    {{-- Main image --}}
-                    <div class="aspect-4/3 overflow-hidden rounded-control bg-black/5">
-                        <img src="{{ asset('storage/' . $firstImage->path) }}" alt="{{ $item->title }}"
-                            class="h-full w-full object-cover" data-main-image />
-                    </div>
-
-                    {{-- Thumbnails --}}
                     @if ($images->count() > 1)
-                        <div class="mt-2 flex gap-2">
+                        {{-- Grid: main image left, thumbnails stacked right --}}
+                        <div class="grid grid-cols-[1fr_30%] gap-2">
+                            <div class="row-span-full overflow-hidden rounded-control bg-black/5">
+                                <img src="{{ asset('storage/' . $firstImage->path) }}"
+                                    alt="{{ $item->title }}"
+                                    class="h-full w-full object-cover" data-main-image />
+                            </div>
+
                             @foreach ($images as $index => $image)
                                 <button type="button"
-                                    class="aspect-square w-16 shrink-0 overflow-hidden rounded-control ring-2 transition {{ $index === 0 ? 'ring-primary' : 'ring-transparent hover:ring-primary/40' }}"
+                                    class="aspect-square overflow-hidden rounded-control ring-2 transition {{ $index === 0 ? 'ring-primary' : 'ring-transparent hover:ring-primary/40' }}"
                                     data-thumb-index="{{ $index }}"
                                     data-thumb-src="{{ asset('storage/' . $image->path) }}">
                                     <img src="{{ asset('storage/' . $image->path) }}" alt=""
                                         class="h-full w-full object-cover" />
                                 </button>
                             @endforeach
+                        </div>
+                    @else
+                        {{-- Single image --}}
+                        <div class="aspect-4/3 overflow-hidden rounded-control bg-black/5">
+                            <img src="{{ asset('storage/' . $firstImage->path) }}"
+                                alt="{{ $item->title }}"
+                                class="h-full w-full object-cover" data-main-image />
                         </div>
                     @endif
                 </div>
