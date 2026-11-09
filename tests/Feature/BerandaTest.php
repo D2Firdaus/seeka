@@ -18,6 +18,24 @@ test('beranda shows the reported items', function () {
         ->assertSee('Dompet Hitam');
 });
 
+test('item detail shows the type and status badges', function (string $status, string $label) {
+    Item::factory()->create([
+        'title' => 'Dompet Hitam',
+        'type' => 'found',
+        'status' => $status,
+    ]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('Penemuan')
+        ->assertSee($label);
+})->with([
+    ['open', 'Terbuka'],
+    ['claimed', 'Diklaim'],
+    ['returned', 'Dikembalikan'],
+    ['closed', 'Ditutup'],
+]);
+
 test('beranda shows the first photo of an item', function () {
     $item = Item::factory()->create(['title' => 'Kunci Motor']);
     $item->images()->createMany([

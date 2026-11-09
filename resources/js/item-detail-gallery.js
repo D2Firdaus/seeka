@@ -23,14 +23,13 @@ document.addEventListener('click', (event) => {
     // Swap the main image source
     mainImage.src = thumb.dataset.thumbSrc;
 
-    // Update active ring on thumbnails
+    // Update active state on thumbnails
     gallery.querySelectorAll('[data-thumb-index]').forEach((btn) => {
-        btn.classList.remove('ring-primary');
-        btn.classList.add('ring-transparent');
+        const active = btn === thumb;
+        btn.classList.toggle('ring-primary', active);
+        btn.classList.toggle('ring-transparent', !active);
+        btn.classList.toggle('opacity-60', !active);
     });
-
-    thumb.classList.remove('ring-transparent');
-    thumb.classList.add('ring-primary');
 });
 
 /**
