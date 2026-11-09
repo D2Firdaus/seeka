@@ -14,7 +14,7 @@
         $ctaUrl = auth()->check() ? '#' : route('login');
     } elseif ($item->type === 'lost') {
         $ctaLabel = 'Ajukan Penemuan';
-        $ctaUrl = auth()->check() ? '#' : route('login');
+        $ctaUrl = auth()->check() ? route('penemuan.create', $item) : route('login');
     } else {
         $ctaLabel = 'Ajukan Klaim';
         $ctaUrl = auth()->check() ? route('klaim.create', $item) : route('login');

@@ -35,7 +35,7 @@
     } elseif ($item->type === 'lost') {
         $ctaLabel = 'Ajukan Penemuan';
         $ctaHelper = 'Menemukan Barang Ini?';
-        $ctaUrl = auth()->check() ? '#' : route('login');
+        $ctaUrl = auth()->check() ? route('penemuan.create', $item) : route('login');
     } else {
         $ctaLabel = 'Ajukan Klaim';
         $ctaHelper = 'Ini Barang Anda?';
