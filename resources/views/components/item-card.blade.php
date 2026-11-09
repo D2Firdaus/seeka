@@ -1,4 +1,4 @@
-@props(['item'])
+@props(['item', 'showAction' => true])
 
 @php
     $toggleId = 'detail-toggle-' . $item->item_id;
@@ -13,11 +13,11 @@
         $ctaLabel = 'Ajukan Banding';
         $ctaUrl = auth()->check() ? '#' : route('login');
     } elseif ($item->type === 'lost') {
-        $ctaLabel = 'Lapor Penemuan';
-        $ctaUrl = auth()->check() ? route('lapor.penemuan') : route('login');
+        $ctaLabel = 'Ajukan Penemuan';
+        $ctaUrl = auth()->check() ? '#' : route('login');
     } else {
         $ctaLabel = 'Ajukan Klaim';
-        $ctaUrl = auth()->check() ? '#' : route('login');
+        $ctaUrl = auth()->check() ? route('klaim.create', $item) : route('login');
     }
 @endphp
 
@@ -87,23 +87,25 @@
             </div>
         </label>
 
-        @if ($isClosed)
-            <span
-                class="mt-auto block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed">
-                {{ $ctaLabel }}
-            </span>
-        @elseif ($isResolved)
-            <a href="{{ $ctaUrl }}"
-                class="mt-auto block rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10">
-                {{ $ctaLabel }}
-            </a>
-        @else
-            <a href="{{ $ctaUrl }}"
-                class="mt-auto block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90">
-                {{ $ctaLabel }}
-            </a>
+        @if ($showAction)
+            @if ($isClosed)
+                <span
+                    class="mt-auto block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed">
+                    {{ $ctaLabel }}
+                </span>
+            @elseif ($isResolved)
+                <a href="{{ $ctaUrl }}"
+                    class="mt-auto block rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10">
+                    {{ $ctaLabel }}
+                </a>
+            @else
+                <a href="{{ $ctaUrl }}"
+                    class="mt-auto block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90">
+                    {{ $ctaLabel }}
+                </a>
+            @endif
         @endif
     </article>
 
-    <x-item-detail-modal :item="$item" :toggleId="$toggleId" />
+    <x-item-detail-modal :item="$item" :toggleId="$toggleId" :showAction="$showAction" />
 </div>

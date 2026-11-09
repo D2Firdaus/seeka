@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\ClaimFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,6 +23,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 ])]
 class Claim extends Model
 {
+    /** @use HasFactory<ClaimFactory> */
+    use HasFactory;
+
     protected $primaryKey = 'claim_id';
 
     protected $attributes = [

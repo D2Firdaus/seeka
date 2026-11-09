@@ -63,7 +63,7 @@ test('item card and detail show appropriate CTA based on type and status', funct
         ->assertSee($expectedCta);
 })->with([
     ['found', 'open', 'Ajukan Klaim'],
-    ['lost', 'open', 'Lapor Penemuan'],
+    ['lost', 'open', 'Ajukan Penemuan'],
     ['found', 'claimed', 'Ajukan Banding'],
     ['lost', 'claimed', 'Ajukan Banding'],
     ['found', 'returned', 'Ajukan Banding'],
