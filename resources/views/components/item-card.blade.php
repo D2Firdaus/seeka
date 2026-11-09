@@ -92,6 +92,11 @@
                 class="mt-auto block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed">
                 {{ $ctaLabel }}
             </span>
+        @elseif ($isResolved)
+            <a href="{{ $ctaUrl }}"
+                class="mt-auto block rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10">
+                {{ $ctaLabel }}
+            </a>
         @else
             <a href="{{ $ctaUrl }}"
                 class="mt-auto block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90">
