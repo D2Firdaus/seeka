@@ -232,3 +232,107 @@ document.addEventListener('click', (event) => {
     syncPhotoInput();
     renderPhotoPreviews();
 });
+
+let proofPhotoUrl = null;
+
+function clearProofPhoto() {
+    const input = document.getElementById('proof_image');
+    const container = document.getElementById('proof-photo-preview');
+    const img = document.getElementById('proof-preview-img');
+    const name = document.getElementById('proof-preview-name');
+    const error = document.getElementById('proof-photo-error');
+
+    if (proofPhotoUrl) {
+        URL.revokeObjectURL(proofPhotoUrl);
+        proofPhotoUrl = null;
+    }
+
+    if (input instanceof HTMLInputElement) {
+        input.value = '';
+    }
+
+    if (img instanceof HTMLImageElement) {
+        img.src = '';
+    }
+
+    if (name) {
+        name.textContent = '';
+    }
+
+    if (container) {
+        container.classList.add('hidden');
+    }
+
+    if (error) {
+        error.textContent = '';
+        error.classList.add('hidden');
+    }
+}
+
+document.addEventListener('change', (event) => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement) || input.id !== 'proof_image') {
+        return;
+    }
+
+    const file = input.files?.[0];
+    const error = document.getElementById('proof-photo-error');
+    const container = document.getElementById('proof-photo-preview');
+    const img = document.getElementById('proof-preview-img');
+    const name = document.getElementById('proof-preview-name');
+
+    if (!file) {
+        clearProofPhoto();
+        return;
+    }
+
+    if (!PHOTO_TYPES.includes(file.type)) {
+        clearProofPhoto();
+        if (error) {
+            error.textContent = `"${file.name}" harus JPG atau PNG.`;
+            error.classList.remove('hidden');
+        }
+        return;
+    }
+
+    if (file.size > MAX_PHOTO_BYTES) {
+        clearProofPhoto();
+        if (error) {
+            error.textContent = `"${file.name}" melebihi 5 MB.`;
+            error.classList.remove('hidden');
+        }
+        return;
+    }
+
+    if (error) {
+        error.textContent = '';
+        error.classList.add('hidden');
+    }
+
+    if (proofPhotoUrl) {
+        URL.revokeObjectURL(proofPhotoUrl);
+    }
+
+    proofPhotoUrl = URL.createObjectURL(file);
+
+    if (img instanceof HTMLImageElement) {
+        img.src = proofPhotoUrl;
+        img.alt = file.name;
+    }
+
+    if (name) {
+        name.textContent = file.name;
+    }
+
+    if (container) {
+        container.classList.remove('hidden');
+    }
+});
+
+document.addEventListener('click', (event) => {
+    const button = event.target.closest('#proof-photo-remove');
+    if (button) {
+        clearProofPhoto();
+    }
+});
+
