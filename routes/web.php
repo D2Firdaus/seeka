@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/lapor/penemuan', [LaporanController::class, 'createFound'])->name('lapor.penemuan');
     Route::post('/lapor/penemuan', [LaporanController::class, 'storeFound']);
+
+    Route::get('/item/{item}/klaim', [ClaimController::class, 'create'])->name('klaim.create');
+    Route::post('/item/{item}/klaim', [ClaimController::class, 'store'])->name('klaim.store');
 });
