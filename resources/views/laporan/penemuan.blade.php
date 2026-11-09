@@ -55,6 +55,15 @@
                         class="w-full resize-none rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-black/40 focus:border-primary">{{ old('description') }}</textarea>
                 </div>
 
+                <div class="mt-6">
+                    <label for="hidden_detail" class="mb-2 block text-label text-ink">Ciri Khusus Barang<span
+                            class="text-primary">*</span></label>
+                    <textarea id="hidden_detail" name="hidden_detail" rows="5" required
+                        placeholder="Ciri yang hanya diketahui pemilik (nomor seri, stiker, isi tas)."
+                        class="w-full resize-none rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-black/40 focus:border-primary">{{ old('hidden_detail') }}</textarea>
+                    <p class="mt-2 text-body-sm text-ink-soft">*Masukkan Informasi Tersembunyi Agar Admin Dapat Memverifikasi Barang Kepada Pemilik.</p>
+                </div>
+
                 <div class="mt-6 grid grid-cols-1 gap-4 min-[380px]:grid-cols-2">
                     <div>
                         <label for="location_id" class="mb-2 block text-label text-ink">Lokasi Penemuan<span
@@ -83,20 +92,10 @@
                 </div>
 
                 <div class="mt-6">
-                    <label for="hidden_detail" class="mb-2 block text-label text-ink">Ciri Khusus Barang<span
-                            class="text-primary">*</span></label>
-                    <input id="hidden_detail" name="hidden_detail" type="text" value="{{ old('hidden_detail') }}" required
-                        placeholder="Ciri yang hanya diketahui pemilik (nomor seri, stiker, isi tas)."
-                        class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-black/40 focus:border-primary" />
-                    <p class="mt-2 text-body-sm text-ink-soft">Disimpan privat — hanya tampil saat verifikasi klaim.</p>
-                </div>
-
-                <div class="mt-6">
                     <label for="storage_location" class="mb-2 block text-label text-ink">Penyimpanan Saat Ini</label>
                     <input id="storage_location" name="storage_location" type="text" value="{{ old('storage_location') }}"
                         placeholder="Lokasi barang disimpan sekarang (opsional)."
                         class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-black/40 focus:border-primary" />
-                    <p class="mt-2 text-body-sm text-ink-soft">Disimpan privat — hanya tampil saat verifikasi klaim.</p>
                 </div>
 
                 <div class="mt-6">
