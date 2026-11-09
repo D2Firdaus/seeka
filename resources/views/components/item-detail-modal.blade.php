@@ -19,11 +19,11 @@
 
 {{-- Modal panel --}}
 <div
-    class="detail-panel invisible fixed inset-0 z-50 flex items-end justify-center opacity-0 [transition:opacity_200ms_ease-out,visibility_200ms] sm:items-center sm:p-4"
+    class="detail-panel invisible fixed inset-0 z-50 flex items-end justify-center opacity-0 [transition:opacity_200ms_ease-out,visibility_200ms]"
     id="detail-{{ $item->item_id }}">
 
     <div
-        class="relative flex max-h-[95dvh] w-full flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl sm:max-w-md sm:rounded-2xl">
+        class="relative flex h-dvh w-full flex-col overflow-hidden bg-white shadow-2xl sm:h-[90dvh] sm:max-w-md sm:rounded-t-2xl">
 
         {{-- Close button --}}
         <label for="{{ $toggleId }}"
