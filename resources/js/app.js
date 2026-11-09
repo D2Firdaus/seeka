@@ -1,4 +1,5 @@
 import './card-title-sync.js';
+import './item-detail-gallery.js';
 
 
 let datePicker;

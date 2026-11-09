@@ -177,3 +177,22 @@
     color: var(--color-primary);
     fill: var(--color-primary);
 }
+
+/* ==========================================================================
+   Item detail modal (checkbox toggle)
+   ========================================================================== */
+
+.detail-toggle:checked ~ .detail-overlay {
+    visibility: visible;
+    opacity: 1;
+}
+
+.detail-toggle:checked ~ .detail-panel {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Lock body scroll when a detail modal is open */
+body:has(.detail-toggle:checked) {
+    overflow: hidden;
+}
