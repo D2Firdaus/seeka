@@ -3,7 +3,7 @@
 @section('title', 'Laporan Kehilangan ' . config('app.name', 'SEEKA'))
 
 @section('content')
-    <main class="mx-auto w-full max-w-6xl flex-1 px-5 pb-16 pt-8 sm:px-8">
+    <main class="mx-auto w-full max-w-7xl flex-1 px-5 pb-16 pt-8 sm:px-8">
         <div class="w-full max-w-2xl">
             <h1 class="text-display font-display">
                 Laporan Kehilangan
