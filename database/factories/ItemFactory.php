@@ -29,7 +29,7 @@ class ItemFactory extends Factory
             'description' => fake()->sentence(),
             'hidden_detail' => fake()->sentence(),
             'date_event' => fake()->dateTimeBetween('-3 months', 'now'),
-            'status' => fake()->randomElement(['open', 'claimed', 'returned', 'closed']),
+            'status' => 'open',
             'storage_location' => 'Lokasi penyimpanan petugas',
         ];
     }

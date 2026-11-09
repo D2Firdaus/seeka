@@ -22,6 +22,7 @@ class BerandaController extends Controller
 
         $items = Item::query()
             ->with(['category', 'location', 'images'])
+            ->where('status', '!=', 'closed')
             ->when($request->filled('q'), fn ($query) => $query->where('title', 'like', '%'.$request->string('q').'%'))
             ->when($request->filled('description'), fn ($query) => $query->where('description', 'like', '%'.$request->string('description').'%'))
             ->when($request->filled('category'), fn ($query) => $query->where('category_id', $request->integer('category')))

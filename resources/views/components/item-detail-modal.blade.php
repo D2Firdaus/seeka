@@ -21,7 +21,27 @@
         default => 'bg-open text-surface border-open',
     };
 
-    $ctaLabel = $item->type === 'lost' ? 'Lapor Penemuan' : 'Ajukan Klaim';
+    $isClosed = $item->status === 'closed';
+    $isResolved = in_array($item->status, ['claimed', 'returned'], true);
+
+    if ($isClosed) {
+        $ctaLabel = 'Laporan Ditutup';
+        $ctaHelper = 'Laporan ini telah ditutup';
+        $ctaUrl = '#';
+    } elseif ($isResolved) {
+        $ctaLabel = 'Ajukan Banding';
+        $ctaHelper = 'Merasa ini barang Anda?';
+        $ctaUrl = auth()->check() ? '#' : route('login');
+    } elseif ($item->type === 'lost') {
+        $ctaLabel = 'Lapor Penemuan';
+        $ctaHelper = 'Menemukan Barang Ini?';
+        $ctaUrl = auth()->check() ? route('lapor.penemuan') : route('login');
+    } else {
+        $ctaLabel = 'Ajukan Klaim';
+        $ctaHelper = 'Ini Barang Anda?';
+        $ctaUrl = auth()->check() ? '#' : route('login');
+    }
+
     $dateLabel = $item->type === 'lost' ? 'Tanggal Kehilangan' : 'Tanggal Penemuan';
     $locationLabel = $item->type === 'lost' ? 'Lokasi Terakhir' : 'Lokasi Penemuan';
 @endphp
@@ -127,12 +147,19 @@
             <div class="px-5 sm:mx-auto sm:max-w-3xl sm:px-10">
                 <div class="sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-5">
                     <p class="mb-2 text-body-sm text-muted sm:mb-0">
-                        {{ $item->type === 'lost' ? 'Menemukan Barang Ini?' : 'Ini Barang Anda?' }}
+                        {{ $ctaHelper }}
                     </p>
-                    <a href="{{ auth()->check() ? '#' : route('login') }}"
-                        class="block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90 sm:px-10">
-                        {{ $ctaLabel }}
-                    </a>
+                    @if ($isClosed)
+                        <span
+                            class="block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed sm:px-10">
+                            {{ $ctaLabel }}
+                        </span>
+                    @else
+                        <a href="{{ $ctaUrl }}"
+                            class="block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90 sm:px-10">
+                            {{ $ctaLabel }}
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
