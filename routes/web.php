@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\ClaimController;
+use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenemuanController;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/item/{item}/penemuan', [PenemuanController::class, 'create'])->name('penemuan.create');
     Route::post('/item/{item}/penemuan', [PenemuanController::class, 'store'])->name('penemuan.store');
+
+    Route::get('/item/{item}/banding', [DisputeController::class, 'create'])->name('banding.create');
+    Route::post('/item/{item}/banding', [DisputeController::class, 'store'])->name('banding.store');
 });
