@@ -1,4 +1,4 @@
-@props(['item', 'toggleId'])
+@props(['item', 'toggleId', 'showAction' => true])
 
 @php
     $images = $item->images;
@@ -33,13 +33,13 @@
         $ctaHelper = 'Merasa ini barang Anda?';
         $ctaUrl = auth()->check() ? '#' : route('login');
     } elseif ($item->type === 'lost') {
-        $ctaLabel = 'Lapor Penemuan';
+        $ctaLabel = 'Ajukan Penemuan';
         $ctaHelper = 'Menemukan Barang Ini?';
-        $ctaUrl = auth()->check() ? route('lapor.penemuan') : route('login');
+        $ctaUrl = auth()->check() ? '#' : route('login');
     } else {
         $ctaLabel = 'Ajukan Klaim';
         $ctaHelper = 'Ini Barang Anda?';
-        $ctaUrl = auth()->check() ? '#' : route('login');
+        $ctaUrl = auth()->check() ? route('klaim.create', $item) : route('login');
     }
 
     $dateLabel = $item->type === 'lost' ? 'Tanggal Kehilangan' : 'Tanggal Penemuan';
@@ -143,37 +143,37 @@
             </div>
         </div>
 
-        <div class="border-t border-line/30 pb-5 pt-4">
-            <div class="px-5 sm:mx-auto sm:max-w-3xl sm:px-10">
-                <div class="sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-5">
-                    <p class="mb-2 text-body-sm text-muted sm:mb-0">
-                        {{ $ctaHelper }}
-                    </p>
-                    @if ($isClosed)
-                        <span
-                            class="block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed sm:px-10">
-                            {{ $ctaLabel }}
-                        </span>
-                    @elseif ($isResolved)
-                        <a href="{{ $ctaUrl }}"
-                            class="block rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10 sm:px-10">
-                            {{ $ctaLabel }}
-                        </a>
-                    @else
-                        <a href="{{ $ctaUrl }}"
-                            class="block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90 sm:px-10">
-                            {{ $ctaLabel }}
-                        </a>
-                    @endif
+        @if ($showAction)
+            <div class="border-t border-line/30 pb-5 pt-4">
+                <div class="px-5 sm:mx-auto sm:max-w-3xl sm:px-10">
+                    <div class="sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-5">
+                        <p class="mb-2 text-body-sm text-muted sm:mb-0">
+                            {{ $ctaHelper }}
+                        </p>
+                        @if ($isClosed)
+                            <span
+                                class="block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed sm:px-10">
+                                {{ $ctaLabel }}
+                            </span>
+                        @elseif ($isResolved)
+                            <a href="{{ $ctaUrl }}"
+                                class="block rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10 sm:px-10">
+                                {{ $ctaLabel }}
+                            </a>
+                        @else
+                            <a href="{{ $ctaUrl }}"
+                                class="block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90 sm:px-10">
+                                {{ $ctaLabel }}
+                            </a>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
-    {{-- Klik di luar sheet menutup modal (di belakang sheet) --}}
     <label for="{{ $toggleId }}" class="absolute inset-0 z-0 cursor-pointer" aria-hidden="true"></label>
 
-    {{-- Tombol X desktop: di luar sheet, pojok kanan atas layar --}}
     <label for="{{ $toggleId }}"
         class="absolute right-4 top-2 z-20 hidden h-8 w-8 cursor-pointer items-center justify-center rounded-full text-surface transition hover:bg-surface/20 sm:flex"
         aria-label="Tutup detail">
