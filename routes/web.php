@@ -31,4 +31,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/lapor/kehilangan', [LaporanController::class, 'create'])->name('lapor.kehilangan');
     Route::post('/lapor/kehilangan', [LaporanController::class, 'store']);
+
+    Route::get('/lapor/penemuan', [LaporanController::class, 'createFound'])->name('lapor.penemuan');
+    Route::post('/lapor/penemuan', [LaporanController::class, 'storeFound']);
 });
