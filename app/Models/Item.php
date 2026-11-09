@@ -67,4 +67,9 @@ class Item extends Model
     {
         return $this->hasMany(ItemImage::class, 'item_id', 'item_id')->orderBy('sort_order');
     }
+
+    public function claims(): HasMany
+    {
+        return $this->hasMany(Claim::class, 'found_item_id', 'item_id');
+    }
 }
