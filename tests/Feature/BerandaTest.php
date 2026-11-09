@@ -33,7 +33,41 @@ test('item detail shows the type and status badges', function (string $status, s
     ['open', 'Terbuka'],
     ['claimed', 'Diklaim'],
     ['returned', 'Dikembalikan'],
-    ['closed', 'Ditutup'],
+]);
+
+test('closed items are not displayed on beranda', function () {
+    Item::factory()->create([
+        'title' => 'Barang Ditutup',
+        'status' => 'closed',
+    ]);
+    Item::factory()->create([
+        'title' => 'Barang Terbuka',
+        'status' => 'open',
+    ]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('Barang Terbuka')
+        ->assertDontSee('Barang Ditutup');
+});
+
+test('item card and detail show appropriate CTA based on type and status', function (string $type, string $status, string $expectedCta) {
+    Item::factory()->create([
+        'title' => 'Barang Uji',
+        'type' => $type,
+        'status' => $status,
+    ]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee($expectedCta);
+})->with([
+    ['found', 'open', 'Ajukan Klaim'],
+    ['lost', 'open', 'Lapor Penemuan'],
+    ['found', 'claimed', 'Ajukan Banding'],
+    ['lost', 'claimed', 'Ajukan Banding'],
+    ['found', 'returned', 'Ajukan Banding'],
+    ['lost', 'returned', 'Ajukan Banding'],
 ]);
 
 test('beranda shows the first photo of an item', function () {

@@ -111,9 +111,7 @@
                     <option value="" class="text-ink">Semua Status</option>
                     <option value="open" class="text-ink" @selected(request('status') == 'open')>Terbuka</option>
                     <option value="claimed" class="text-ink" @selected(request('status') == 'claimed')>Diklaim</option>
-                    <option value="returned" class="text-ink" @selected(request('status') == 'returned')>Dikembalikan
-                    </option>
-                    <option value="closed" class="text-ink" @selected(request('status') == 'closed')>Ditutup</option>
+                    <option value="returned" class="text-ink" @selected(request('status') == 'returned')>Dikembalikan</option>
                 </select>
                 <x-icons.chevron-right
                     class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
