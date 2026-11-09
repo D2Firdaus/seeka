@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PenemuanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BerandaController::class, 'index'])->name('home');
@@ -38,4 +39,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/item/{item}/klaim', [ClaimController::class, 'create'])->name('klaim.create');
     Route::post('/item/{item}/klaim', [ClaimController::class, 'store'])->name('klaim.store');
+
+    Route::get('/item/{item}/penemuan', [PenemuanController::class, 'create'])->name('penemuan.create');
+    Route::post('/item/{item}/penemuan', [PenemuanController::class, 'store'])->name('penemuan.store');
 });
