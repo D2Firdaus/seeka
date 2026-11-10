@@ -146,6 +146,24 @@ test('filter by location only lists that location', function () {
         ->assertDontSee('Kunci Motor');
 });
 
+test('filter by date range only lists items in that range', function () {
+    Item::factory()->create(['title' => 'Dompet Hitam', 'date_event' => '2026-01-10']);
+    Item::factory()->create(['title' => 'Kunci Motor', 'date_event' => '2026-02-10']);
+
+    $this->get(route('home', ['date_from' => '2026-01-01', 'date_to' => '2026-01-31']))
+        ->assertOk()
+        ->assertSee('Dompet Hitam')
+        ->assertDontSee('Kunci Motor');
+});
+
+test('date filter keeps the selected range in the modal', function () {
+    $response = $this->get(route('home', ['date_from' => '2026-01-01', 'date_to' => '2026-01-31']))
+        ->assertOk();
+
+    expect($response->getContent())->toContain('name="date_from" value="2026-01-01"');
+    expect($response->getContent())->toContain('name="date_to" value="2026-01-31"');
+});
+
 test('filter reset buttons clear fields without navigation', function () {
     $category = Category::factory()->create();
 
