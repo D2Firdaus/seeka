@@ -1,3 +1,5 @@
+import flatpickr from 'flatpickr';
+
 import './card-title-sync.js';
 import './item-detail-gallery.js';
 
