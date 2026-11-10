@@ -11,7 +11,7 @@
         $ctaUrl = '#';
     } elseif ($isResolved) {
         $ctaLabel = 'Ajukan Banding';
-        $ctaUrl = auth()->check() ? '#' : route('login');
+        $ctaUrl = auth()->check() ? route('banding.create', $item) : route('login');
     } elseif ($item->type === 'lost') {
         $ctaLabel = 'Ajukan Penemuan';
         $ctaUrl = auth()->check() ? route('penemuan.create', $item) : route('login');

@@ -31,7 +31,7 @@
     } elseif ($isResolved) {
         $ctaLabel = 'Ajukan Banding';
         $ctaHelper = 'Merasa ini barang Anda?';
-        $ctaUrl = auth()->check() ? '#' : route('login');
+        $ctaUrl = auth()->check() ? route('banding.create', $item) : route('login');
     } elseif ($item->type === 'lost') {
         $ctaLabel = 'Ajukan Penemuan';
         $ctaHelper = 'Menemukan Barang Ini?';
