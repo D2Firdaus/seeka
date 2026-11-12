@@ -36,6 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
 
+    Route::get('/laporan-saya', [LaporanController::class, 'index'])->name('laporan.saya');
+    Route::get('/laporan-saya/{item}/edit', [LaporanController::class, 'edit'])->name('laporan.edit');
+    Route::put('/laporan-saya/{item}', [LaporanController::class, 'update'])->name('laporan.update');
+    Route::delete('/laporan-saya/{item}', [LaporanController::class, 'destroy'])->name('laporan.destroy');
+    Route::patch('/laporan-saya/{item}/tutup', [LaporanController::class, 'close'])->name('laporan.close');
+
     Route::get('/lapor/kehilangan', [LaporanController::class, 'create'])->name('lapor.kehilangan');
     Route::post('/lapor/kehilangan', [LaporanController::class, 'store']);
 

@@ -1,4 +1,4 @@
-@props(['item', 'toggleId', 'showAction' => true])
+@props(['item', 'toggleId', 'showAction' => true, 'owner' => false])
 
 @php
     $images = $item->images;
@@ -146,27 +146,65 @@
         @if ($showAction)
             <div class="border-t border-line/30 pb-5 pt-4">
                 <div class="px-5 sm:mx-auto sm:max-w-3xl sm:px-10">
-                    <div class="sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-5">
-                        <p class="mb-2 text-body-sm text-muted sm:mb-0">
-                            {{ $ctaHelper }}
-                        </p>
-                        @if ($isClosed)
-                            <span
-                                class="block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed sm:px-10">
-                                {{ $ctaLabel }}
-                            </span>
-                        @elseif ($isResolved)
-                            <a href="{{ $ctaUrl }}"
-                                class="block rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10 sm:px-10">
-                                {{ $ctaLabel }}
-                            </a>
-                        @else
-                            <a href="{{ $ctaUrl }}"
-                                class="block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90 sm:px-10">
-                                {{ $ctaLabel }}
-                            </a>
-                        @endif
-                    </div>
+                    @if ($owner)
+                        @php
+                            $canManage = $item->status === 'open';
+                        @endphp
+                        <div class="sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-5">
+                            <p class="mb-3 text-body-sm text-muted sm:mb-0">
+                                @if ($canManage)
+                                    Ubah atau hapus laporan ini selama masih berstatus terbuka.
+                                @else
+                                    Laporan ini sudah tidak berstatus terbuka sehingga tidak dapat diubah.
+                                @endif
+                            </p>
+                            <div class="flex gap-3">
+                                @if ($canManage)
+                                    <a href="{{ route('laporan.edit', $item) }}"
+                                        class="block flex-1 rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10 sm:px-8">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{{ route('laporan.destroy', $item) }}"
+                                        data-confirm-delete
+                                        class="flex-1">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="block w-full rounded-control border-[0.5px] border-line bg-white px-5 py-3 text-center text-label text-ink transition hover:border-black/40 sm:px-8">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                @else
+                                    <span
+                                        class="block flex-1 rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted sm:px-8">
+                                        Tidak Dapat Diubah
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    @else
+                        <div class="sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-5">
+                            <p class="mb-2 text-body-sm text-muted sm:mb-0">
+                                {{ $ctaHelper }}
+                            </p>
+                            @if ($isClosed)
+                                <span
+                                    class="block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed sm:px-10">
+                                    {{ $ctaLabel }}
+                                </span>
+                            @elseif ($isResolved)
+                                <a href="{{ $ctaUrl }}"
+                                    class="block rounded-control border-[0.5px] border-primary bg-transparent px-5 py-3 text-center text-label text-primary transition hover:bg-primary/10 sm:px-10">
+                                    {{ $ctaLabel }}
+                                </a>
+                            @else
+                                <a href="{{ $ctaUrl }}"
+                                    class="block rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90 sm:px-10">
+                                    {{ $ctaLabel }}
+                                </a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         @endif

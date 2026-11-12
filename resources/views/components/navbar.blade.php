@@ -6,7 +6,8 @@
     $dropdownMenuRoutes = [
         'profile.show' => 'Profil',
         'profile.update' => 'Profil',
-        'laporan.saya' => 'Laporan Saya',
+        'laporan.saya' => '',
+        'laporan.edit' => '',
         'klaim.saya' => 'Klaim Saya',
         'pengaturan' => 'Pengaturan',
         'admin.dashboard' => 'Dashboard Admin',
@@ -47,7 +48,7 @@
                 <a href="{{ route('home') }}" class="inline-block shrink-0" aria-label="{{ config('app.name', 'SEEKA') }} — beranda">
                     <img src="{{ asset('images/seeka-mark.svg') }}" alt="{{ config('app.name', 'SEEKA') }}" class="-my-1.5 h-14 w-14" />
                 </a>
-                @if ($isSimpleNav)
+                @if (filled($currentDropdownTitle))
                     <span class="truncate text-title font-semibold text-ink">{{ $currentDropdownTitle }}</span>
                 @endif
             </div>
@@ -74,7 +75,7 @@
                                 <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                     Profil
                                 </a>
-                                <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                <a href="{{ route('laporan.saya') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                     Laporan Saya
                                 </a>
                                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
