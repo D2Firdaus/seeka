@@ -4,6 +4,120 @@ import './card-title-sync.js';
 import './item-detail-gallery.js';
 
 
+// ==========================================================================
+// Animated Dropdown Menu (Primer-style appear/exit + spam-proof + click-outside)
+// ==========================================================================
+
+function cancelClosingAnimation(details, menu) {
+    if (details._closeTimer) {
+        clearTimeout(details._closeTimer);
+        details._closeTimer = null;
+    }
+    if (details._onAnimationEnd) {
+        menu.removeEventListener('animationend', details._onAnimationEnd);
+        details._onAnimationEnd = null;
+    }
+    delete details.dataset.closing;
+}
+
+function openDropdownAnimated(details) {
+    const menu = details.querySelector('[data-dropdown-menu]');
+    if (!menu) {
+        details.setAttribute('open', '');
+        return;
+    }
+
+    cancelClosingAnimation(details, menu);
+
+    details.setAttribute('open', '');
+    menu.classList.remove('dropdown-menu-close');
+
+    // Force browser reflow so animation always restarts from 0% even on spam clicks
+    void menu.offsetWidth;
+
+    menu.classList.add('dropdown-menu-open');
+}
+
+function closeDropdownAnimated(details) {
+    if (!details.hasAttribute('open') || details.dataset.closing === 'true') {
+        return;
+    }
+
+    const menu = details.querySelector('[data-dropdown-menu]');
+    if (!menu) {
+        details.removeAttribute('open');
+        return;
+    }
+
+    cancelClosingAnimation(details, menu);
+
+    details.dataset.closing = 'true';
+    menu.classList.remove('dropdown-menu-open');
+
+    // Force browser reflow to reliably trigger the close keyframe
+    void menu.offsetWidth;
+
+    menu.classList.add('dropdown-menu-close');
+
+    const finish = () => {
+        cancelClosingAnimation(details, menu);
+        menu.classList.remove('dropdown-menu-close');
+        details.removeAttribute('open');
+    };
+
+    details._onAnimationEnd = finish;
+    menu.addEventListener('animationend', finish, { once: true });
+
+    // Safety fallback: 180ms covers the 150ms animation duration
+    details._closeTimer = setTimeout(finish, 180);
+}
+
+// Intercept summary clicks on animated dropdowns to animate opening and closing
+document.addEventListener('click', (event) => {
+    const summary = event.target.closest('details[data-animated-dropdown] > summary');
+    if (summary) {
+        const details = summary.parentElement;
+
+        // Prevent native instant toggle so state is 100% orchestrated
+        event.preventDefault();
+
+        // If currently closing, an extra click should reopen it smoothly immediately
+        if (details.dataset.closing === 'true') {
+            openDropdownAnimated(details);
+            return;
+        }
+
+        if (details.hasAttribute('open')) {
+            closeDropdownAnimated(details);
+        } else {
+            // Close any other open dropdowns first
+            document.querySelectorAll('details[data-animated-dropdown][open]').forEach((other) => {
+                if (other !== details) {
+                    closeDropdownAnimated(other);
+                }
+            });
+            openDropdownAnimated(details);
+        }
+        return;
+    }
+
+    // Click outside: close any open animated dropdowns
+    document.querySelectorAll('details[data-animated-dropdown][open]').forEach((details) => {
+        if (!details.contains(event.target)) {
+            closeDropdownAnimated(details);
+        }
+    });
+});
+
+// Close dropdown on Escape key
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        document.querySelectorAll('details[data-animated-dropdown][open]').forEach((details) => {
+            closeDropdownAnimated(details);
+        });
+    }
+});
+
 let datePicker;
 
 document.addEventListener('submit', (event) => {

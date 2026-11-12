@@ -284,3 +284,32 @@ test('guests see the sign in button while users see their name', function () {
         ->assertSee('Dede')
         ->assertDontSee('Sign in');
 });
+
+test('profile dropdown shows regular user links and hides admin links', function () {
+    $user = User::factory()->create(['name' => 'John Doe', 'role' => 'user']);
+
+    $this->actingAs($user)
+        ->get(route('home'))
+        ->assertOk()
+        ->assertSee('Profil')
+        ->assertSee('Laporan Saya')
+        ->assertSee('Klaim Saya')
+        ->assertSee('Pengaturan')
+        ->assertSee('Keluar')
+        ->assertDontSee('Dashboard Admin')
+        ->assertDontSee('Kelola Pengguna')
+        ->assertDontSee('Verifikasi Laporan')
+        ->assertDontSee('Kelola Metadata');
+});
+
+test('profile dropdown shows admin links when authenticated as admin', function () {
+    $admin = User::factory()->create(['name' => 'Admin User', 'role' => 'admin']);
+
+    $this->actingAs($admin)
+        ->get(route('home'))
+        ->assertOk()
+        ->assertSee('Dashboard Admin')
+        ->assertSee('Kelola Pengguna')
+        ->assertSee('Verifikasi Laporan')
+        ->assertSee('Kelola Metadata');
+});

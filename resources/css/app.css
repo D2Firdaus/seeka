@@ -188,6 +188,40 @@
 }
 
 /* ==========================================================================
+   Dropdown menu animations (Primer-style appear & exit)
+   ========================================================================== */
+
+@keyframes dropdown-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes dropdown-disappear {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.dropdown-menu-open {
+    transform-origin: top center;
+    animation: dropdown-appear 0.2s cubic-bezier(0.32, 0, 0.67, 0) forwards;
+}
+
+.dropdown-menu-close {
+    animation: dropdown-disappear 0.15s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+    pointer-events: none;
+}
+
+/* ==========================================================================
    Item detail modal (checkbox toggle)
    ========================================================================== */
 
