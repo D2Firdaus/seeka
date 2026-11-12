@@ -4,7 +4,7 @@
 
 @section('content')
     <main class="mx-auto w-full max-w-7xl flex-1 px-5 pb-16 pt-6 sm:px-8">
-        <h1 class="text-display font-display">Laporan Saya</h1>
+        <h1 class="text-display font-display mb-[1.15em]">Laporan Saya</h1>
 
         {{-- Form Pencarian & Filter --}}
         <form method="GET" action="{{ route('laporan.saya') }}" class="mt-6 mb-5">

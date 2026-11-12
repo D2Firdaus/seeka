@@ -34,7 +34,7 @@ test('the index page shows the page heading without a sub-navbar', function () {
     $this->actingAs($user)
         ->get(route('laporan.saya'))
         ->assertOk()
-        ->assertSee('<h1 class="text-display font-display">Laporan Saya</h1>', false)
+        ->assertSee('<h1 class="text-display font-display mb-[1.15em]">Laporan Saya</h1>', false)
         ->assertDontSee('Semua Laporan')
         ->assertDontSee('Pencarian');
 });
@@ -170,7 +170,6 @@ test('the edit page offers removing existing photos with an x button instead of 
     $html = $this->actingAs($user)
         ->get(route('laporan.edit', $item))
         ->assertOk()
-        ->assertSee('Foto saat ini — klik X untuk menghapus.')
         ->assertSee('data-existing-photo-remove="'.$image->image_id.'"', false)
         ->assertSee('aria-label="Hapus foto"', false)
         ->getContent();

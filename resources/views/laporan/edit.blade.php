@@ -13,13 +13,9 @@
 @section('content')
     <main class="mx-auto w-full max-w-7xl flex-1 px-5 pb-16 pt-8 sm:px-8">
         <header class="mb-8">
-            <h1 class="text-display font-display">
+            <h1 class="text-display font-display mb-[1.15em]">
                 Edit Laporan {{ $typeLabel }}
             </h1>
-
-            <p class="mt-3 text-title font-display font-normal text-ink-soft">
-                Perbarui detail laporan "{{ $item->title }}"
-            </p>
         </header>
 
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,42rem)_1fr] lg:items-start lg:gap-12">
@@ -38,8 +34,8 @@
                         <div>
                             <label for="title" class="mb-2 block text-label text-ink">Nama Barang<span
                                     class="text-primary">*</span></label>
-                            <input id="title" name="title" type="text"
-                                value="{{ old('title', $item->title) }}" required autofocus placeholder="Nama Barang"
+                            <input id="title" name="title" type="text" value="{{ old('title', $item->title) }}" required
+                                autofocus placeholder="Nama Barang"
                                 class="w-full rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-black/40 focus:border-primary" />
                         </div>
 
@@ -52,7 +48,9 @@
                                     <option value="" class="text-ink">Pilih Kategori</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->category_id }}" class="text-ink"
-                                            @selected(old('category_id', $item->category_id) == $category->category_id)>{{ $category->name }}</option>
+                                            @selected(old('category_id', $item->category_id) == $category->category_id)>
+                                            {{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <x-icons.chevron-right
@@ -76,7 +74,8 @@
                             <textarea id="hidden_detail" name="hidden_detail" rows="5" required
                                 placeholder="Ciri yang hanya diketahui pemilik (nomor seri, stiker, isi tas)."
                                 class="w-full resize-none rounded-control border-[0.5px] border-line bg-white px-3.5 py-3 text-body text-ink outline-none transition placeholder:text-black/40 focus:border-primary">{{ old('hidden_detail', $item->hidden_detail) }}</textarea>
-                            <p class="mt-2 text-body-sm text-ink-soft">*Masukkan Informasi Tersembunyi Agar Admin Dapat Memverifikasi Barang Kepada Pemilik.</p>
+                            <p class="mt-2 text-body-sm text-ink-soft">*Masukkan Informasi Tersembunyi Agar Admin Dapat
+                                Memverifikasi Barang Kepada Pemilik.</p>
                         </div>
                     @endif
 
@@ -90,7 +89,9 @@
                                     <option value="" class="text-ink">Pilih Lokasi</option>
                                     @foreach ($locations as $location)
                                         <option value="{{ $location->location_id }}" class="text-ink"
-                                            @selected(old('location_id', $item->location_id) == $location->location_id)>{{ $location->name }}</option>
+                                            @selected(old('location_id', $item->location_id) == $location->location_id)>
+                                            {{ $location->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <x-icons.chevron-right
@@ -122,7 +123,6 @@
                         <p class="mb-2 text-label text-ink">Foto Barang</p>
 
                         @if ($item->images->isNotEmpty())
-                            <p class="mb-2 text-body-sm text-ink-soft">Foto saat ini — klik X untuk menghapus.</p>
                             <div class="grid grid-cols-2 gap-3 min-[380px]:grid-cols-3">
                                 @foreach ($item->images as $image)
                                     @php
@@ -135,9 +135,9 @@
                                         <img src="{{ asset('storage/' . $image->path) }}" alt="Foto {{ $item->title }}"
                                             class="aspect-square w-full bg-black/5 object-cover" />
                                         <div class="flex items-center justify-between gap-2 px-2 py-1.5">
-                                            <span class="min-w-0 truncate text-caption text-ink-soft">Foto {{ $loop->iteration }}</span>
-                                            <button type="button"
-                                                data-existing-photo-remove="{{ $image->image_id }}"
+                                            <span class="min-w-0 truncate text-caption text-ink-soft">Foto
+                                                {{ $loop->iteration }}</span>
+                                            <button type="button" data-existing-photo-remove="{{ $image->image_id }}"
                                                 class="shrink-0 rounded-control p-1 text-ink-soft transition hover:bg-black/5 hover:text-primary"
                                                 aria-label="Hapus foto">
                                                 <x-icons.close class="h-4 w-4" />
@@ -162,8 +162,8 @@
                                 Tambah Foto
                             </label>
                         </div>
-                        <input id="photos" name="photos[]" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" multiple
-                            class="sr-only" />
+                        <input id="photos" name="photos[]" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+                            multiple class="sr-only" />
                         <p id="photo-error" class="mt-2 hidden text-label text-primary"></p>
                         <div id="photo-previews" class="mt-3 hidden grid grid-cols-2 gap-3 min-[380px]:grid-cols-3"></div>
                         <template id="photo-preview-template">

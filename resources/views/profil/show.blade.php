@@ -17,7 +17,7 @@
 
 @section('content')
     <main class="mx-auto w-full max-w-7xl flex-1 px-5 pb-16 pt-8 sm:px-8">
-        <h1 class="text-display font-display">Profil Saya</h1>
+        <h1 class="text-display font-display mb-[1.15em]">Profil Saya</h1>
 
         <div class="mt-6 flex flex-col gap-6 lg:flex-row lg:gap-8">
             <aside class="w-full shrink-0 lg:sticky lg:top-6 lg:self-start lg:w-72 xl:w-80">
