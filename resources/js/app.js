@@ -349,6 +349,43 @@ document.addEventListener('click', (event) => {
     renderPhotoPreviews();
 });
 
+document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-existing-photo-remove]');
+
+    if (!button) {
+        return;
+    }
+
+    const card = button.closest('[data-existing-photo]');
+    const form = button.closest('form');
+
+    if (!card || !form) {
+        return;
+    }
+
+    const imageId = button.dataset.existingPhotoRemove;
+
+    card.classList.add('hidden');
+
+    if (!form.querySelector(`input[name="remove_images[]"][value="${imageId}"]`)) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'remove_images[]';
+        input.value = imageId;
+        form.appendChild(input);
+    }
+});
+
+document.addEventListener('submit', (event) => {
+    const form = event.target;
+
+    if (form instanceof HTMLFormElement && form.hasAttribute('data-confirm-delete')) {
+        if (!window.confirm('Hapus laporan ini? Tindakan ini tidak dapat dibatalkan.')) {
+            event.preventDefault();
+        }
+    }
+});
+
 let proofPhotoUrl = null;
 
 function clearProofPhoto() {

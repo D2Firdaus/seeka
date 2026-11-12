@@ -1,4 +1,4 @@
-@props(['item', 'showAction' => true])
+@props(['item', 'showAction' => true, 'owner' => false])
 
 @php
     $toggleId = 'detail-toggle-' . $item->item_id;
@@ -6,7 +6,10 @@
     $isClosed = $item->status === 'closed';
     $isResolved = in_array($item->status, ['claimed', 'returned'], true);
 
-    if ($isClosed) {
+    if ($owner) {
+        $ctaLabel = $item->status === 'open' ? 'Kelola Laporan' : 'Lihat Laporan';
+        $ctaUrl = '#';
+    } elseif ($isClosed) {
         $ctaLabel = 'Laporan Ditutup';
         $ctaUrl = '#';
     } elseif ($isResolved) {
@@ -88,7 +91,12 @@
         </label>
 
         @if ($showAction)
-            @if ($isClosed)
+            @if ($owner)
+                <label for="{{ $toggleId }}"
+                    class="mt-auto block cursor-pointer rounded-control bg-primary px-5 py-3 text-center text-label text-white transition hover:bg-primary/90">
+                    {{ $ctaLabel }}
+                </label>
+            @elseif ($isClosed)
                 <span
                     class="mt-auto block rounded-control bg-black/10 px-5 py-3 text-center text-label text-muted cursor-not-allowed">
                     {{ $ctaLabel }}
@@ -107,5 +115,5 @@
         @endif
     </article>
 
-    <x-item-detail-modal :item="$item" :toggleId="$toggleId" :showAction="$showAction" />
+    <x-item-detail-modal :item="$item" :toggleId="$toggleId" :showAction="$showAction" :owner="$owner" />
 </div>

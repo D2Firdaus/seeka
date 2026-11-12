@@ -1,4 +1,4 @@
-@props(['categories', 'locations'])
+@props(['categories', 'locations', 'showType' => true, 'includeClosed' => false])
 
 @php
     $typeValues = array_filter((array) request('type'));
@@ -79,25 +79,27 @@
             </div>
         </div>
 
-        <div class="border-b border-black/10 px-5 py-4">
-            <div class="flex items-center justify-between">
-                <h3 class="text-label">Tipe</h3>
-                <button type="button" data-reset="type"
-                    class="text-label text-primary hover:underline">Reset</button>
+        @if ($showType)
+            <div class="border-b border-black/10 px-5 py-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-label">Tipe</h3>
+                    <button type="button" data-reset="type"
+                        class="text-label text-primary hover:underline">Reset</button>
+                </div>
+                <div class="mt-3 space-y-2">
+                    <label class="flex items-center gap-2.5 text-body">
+                        <input type="checkbox" name="type[]" value="lost" @checked(in_array('lost', $typeValues, true))
+                            class="h-4 w-4 rounded-control border-line accent-primary" />
+                        Kehilangan
+                    </label>
+                    <label class="flex items-center gap-2.5 text-body">
+                        <input type="checkbox" name="type[]" value="found" @checked(in_array('found', $typeValues, true))
+                            class="h-4 w-4 rounded-control border-line accent-primary" />
+                        Penemuan
+                    </label>
+                </div>
             </div>
-            <div class="mt-3 space-y-2">
-                <label class="flex items-center gap-2.5 text-body">
-                    <input type="checkbox" name="type[]" value="lost" @checked(in_array('lost', $typeValues, true))
-                        class="h-4 w-4 rounded-control border-line accent-primary" />
-                    Kehilangan
-                </label>
-                <label class="flex items-center gap-2.5 text-body">
-                    <input type="checkbox" name="type[]" value="found" @checked(in_array('found', $typeValues, true))
-                        class="h-4 w-4 rounded-control border-line accent-primary" />
-                    Penemuan
-                </label>
-            </div>
-        </div>
+        @endif
 
         <div class="border-b border-black/10 px-5 py-4">
             <div class="flex items-center justify-between">
@@ -112,6 +114,9 @@
                     <option value="open" class="text-ink" @selected(request('status') == 'open')>Terbuka</option>
                     <option value="claimed" class="text-ink" @selected(request('status') == 'claimed')>Diklaim</option>
                     <option value="returned" class="text-ink" @selected(request('status') == 'returned')>Dikembalikan</option>
+                    @if ($includeClosed)
+                        <option value="closed" class="text-ink" @selected(request('status') == 'closed')>Ditutup</option>
+                    @endif
                 </select>
                 <x-icons.chevron-right
                     class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-ink" />
