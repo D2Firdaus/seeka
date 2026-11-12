@@ -30,13 +30,13 @@ test('users can view their own profile with identity and stats', function () {
         ->get(route('profile.show'));
 
     $response->assertOk()
-        ->assertSee('Profil Saya')
         ->assertSee('Dede Firdaus')
         ->assertSee('dede@mahasiswa.unsika.ac.id')
         ->assertSee('2110512001')
         ->assertSee('6281234567890')
         ->assertSee('Terverifikasi')
-        ->assertSee('Pengguna');
+        ->assertSee('Pengguna')
+        ->assertDontSee('Pencarian');
 
     $response->assertSee('1 kehilangan · 1 penemuan');
 });
