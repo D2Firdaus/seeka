@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="py-1.5">
-                                <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                     Profil
                                 </a>
                                 <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
