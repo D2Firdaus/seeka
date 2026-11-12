@@ -4,8 +4,8 @@
     $isPenemuanPage = request()->routeIs('lapor.penemuan');
 
     $dropdownMenuRoutes = [
-        'profile.show' => 'Profil',
-        'profile.update' => 'Profil',
+        'profile.show' => '',
+        'profile.update' => '',
         'laporan.saya' => '',
         'laporan.edit' => '',
         'klaim.saya' => 'Klaim Saya',

@@ -30,6 +30,7 @@ test('users can view their own profile with identity and stats', function () {
         ->get(route('profile.show'));
 
     $response->assertOk()
+        ->assertSee('Profil Saya')
         ->assertSee('Dede Firdaus')
         ->assertSee('dede@mahasiswa.unsika.ac.id')
         ->assertSee('2110512001')
