@@ -8,6 +8,7 @@ use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenemuanController;
+use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profil', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/pengaturan', [PengaturanController::class, 'edit'])->name('pengaturan');
+    Route::patch('/pengaturan/notifikasi', [PengaturanController::class, 'updateNotifikasi'])->name('pengaturan.notifikasi');
+    Route::patch('/pengaturan/password', [PengaturanController::class, 'updatePassword'])->name('pengaturan.password');
 
     Route::get('/laporan-saya', [LaporanController::class, 'index'])->name('laporan.saya');
     Route::get('/laporan-saya/{item}/edit', [LaporanController::class, 'edit'])->name('laporan.edit');

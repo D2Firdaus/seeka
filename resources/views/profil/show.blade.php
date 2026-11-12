@@ -319,7 +319,7 @@
                     <div class="flex items-center justify-between gap-3">
                         <h2 class="text-title font-display">Notifikasi</h2>
 
-                        <a href="#" class="shrink-0 text-label text-primary transition hover:underline">Atur</a>
+                        <a href="{{ route('pengaturan') }}" class="shrink-0 text-label text-primary transition hover:underline">Atur</a>
                     </div>
 
                     <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 rounded-control border-[0.5px] border-line bg-white p-5 text-body-sm text-ink-soft">
