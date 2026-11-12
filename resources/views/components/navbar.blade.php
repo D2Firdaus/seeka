@@ -4,8 +4,8 @@
     $isPenemuanPage = request()->routeIs('lapor.penemuan');
 
     $dropdownMenuRoutes = [
-        'profile.show' => 'Profil',
-        'profile.update' => 'Profil',
+        'profile.show' => '',
+        'profile.update' => '',
         'laporan.saya' => 'Laporan Saya',
         'klaim.saya' => 'Klaim Saya',
         'pengaturan' => 'Pengaturan',
@@ -47,7 +47,7 @@
                 <a href="{{ route('home') }}" class="inline-block shrink-0" aria-label="{{ config('app.name', 'SEEKA') }} — beranda">
                     <img src="{{ asset('images/seeka-mark.svg') }}" alt="{{ config('app.name', 'SEEKA') }}" class="-my-1.5 h-14 w-14" />
                 </a>
-                @if ($isSimpleNav)
+                @if (filled($currentDropdownTitle))
                     <span class="truncate text-title font-semibold text-ink">{{ $currentDropdownTitle }}</span>
                 @endif
             </div>
