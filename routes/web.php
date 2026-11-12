@@ -8,6 +8,7 @@ use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PenemuanController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [BerandaController::class, 'index'])->name('home');
@@ -31,6 +32,9 @@ Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 've
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+    Route::get('/profil', [ProfileController::class, 'show'])->name('profile.show');
+    Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/lapor/kehilangan', [LaporanController::class, 'create'])->name('lapor.kehilangan');
     Route::post('/lapor/kehilangan', [LaporanController::class, 'store']);
