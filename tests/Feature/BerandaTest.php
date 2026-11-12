@@ -296,6 +296,7 @@ test('profile dropdown shows regular user links and hides admin links', function
         ->assertSee('Klaim Saya')
         ->assertSee('Pengaturan')
         ->assertSee('Keluar')
+        ->assertSee('Pencarian')
         ->assertDontSee('Dashboard Admin')
         ->assertDontSee('Kelola Pengguna')
         ->assertDontSee('Verifikasi Laporan')
@@ -312,4 +313,14 @@ test('profile dropdown shows admin links when authenticated as admin', function 
         ->assertSee('Kelola Pengguna')
         ->assertSee('Verifikasi Laporan')
         ->assertSee('Kelola Metadata');
+});
+
+test('sub-navbar tabs are hidden and menu title is shown on profile page', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get(route('profile.show'))
+        ->assertOk()
+        ->assertSee('Profil')
+        ->assertDontSee('Pencarian');
 });

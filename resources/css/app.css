@@ -98,6 +98,10 @@
 }
 
 @layer base {
+    html {
+        scrollbar-gutter: stable;
+    }
+
     body {
         @apply font-sans text-body text-ink;
         -webkit-font-smoothing: antialiased;
