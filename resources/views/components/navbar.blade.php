@@ -11,7 +11,7 @@
         'klaim.saya' => '',
         'klaim.edit' => '',
         'pengaturan' => 'Pengaturan',
-        'admin.dashboard' => 'Dashboard Admin',
+        'admin.dashboard' => '',
         'admin.users' => 'Kelola Pengguna',
         'admin.reports' => 'Verifikasi Laporan',
         'admin.metadata' => 'Kelola Metadata',
@@ -86,7 +86,7 @@
 
                             @if (auth()->user()->isAdmin())
                                 <div class="border-t border-black/10 py-1.5">
-                                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Dashboard Admin
                                     </a>
                                     <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">

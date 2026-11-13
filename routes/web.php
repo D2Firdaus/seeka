@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -66,4 +67,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/item/{item}/banding', [DisputeController::class, 'create'])->name('banding.create');
     Route::post('/item/{item}/banding', [DisputeController::class, 'store'])->name('banding.store');
+
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware('can:accessAdmin');
 });

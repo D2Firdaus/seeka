@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use Database\Factories\HandoverFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable(['claim_id', 'handed_by', 'received_by', 'handover_date', 'photo', 'note'])]
 class Handover extends Model
 {
+    /** @use HasFactory<HandoverFactory> */
+    use HasFactory;
+
     protected $primaryKey = 'handover_id';
 
     protected function casts(): array
