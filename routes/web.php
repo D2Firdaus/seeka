@@ -8,6 +8,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\DisputeController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\MetadataController;
 use App\Http\Controllers\PenemuanController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProfileController;
@@ -68,5 +69,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/item/{item}/banding', [DisputeController::class, 'create'])->name('banding.create');
     Route::post('/item/{item}/banding', [DisputeController::class, 'store'])->name('banding.store');
 
-    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware('can:accessAdmin');
+    Route::middleware('can:accessAdmin')->group(function () {
+        Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+        Route::get('/admin/metadata/kategori', [MetadataController::class, 'kategoriIndex'])->name('admin.metadata.kategori');
+        Route::get('/admin/metadata/kategori/create', [MetadataController::class, 'kategoriCreate'])->name('admin.metadata.kategori.create');
+        Route::post('/admin/metadata/kategori', [MetadataController::class, 'kategoriStore'])->name('admin.metadata.kategori.store');
+        Route::get('/admin/metadata/kategori/{category}/edit', [MetadataController::class, 'kategoriEdit'])->name('admin.metadata.kategori.edit');
+        Route::put('/admin/metadata/kategori/{category}', [MetadataController::class, 'kategoriUpdate'])->name('admin.metadata.kategori.update');
+        Route::delete('/admin/metadata/kategori/{category}', [MetadataController::class, 'kategoriDestroy'])->name('admin.metadata.kategori.destroy');
+
+        Route::get('/admin/metadata/lokasi', [MetadataController::class, 'lokasiIndex'])->name('admin.metadata.lokasi');
+        Route::get('/admin/metadata/lokasi/create', [MetadataController::class, 'lokasiCreate'])->name('admin.metadata.lokasi.create');
+        Route::post('/admin/metadata/lokasi', [MetadataController::class, 'lokasiStore'])->name('admin.metadata.lokasi.store');
+        Route::get('/admin/metadata/lokasi/{location}/edit', [MetadataController::class, 'lokasiEdit'])->name('admin.metadata.lokasi.edit');
+        Route::put('/admin/metadata/lokasi/{location}', [MetadataController::class, 'lokasiUpdate'])->name('admin.metadata.lokasi.update');
+        Route::delete('/admin/metadata/lokasi/{location}', [MetadataController::class, 'lokasiDestroy'])->name('admin.metadata.lokasi.destroy');
+    });
 });
