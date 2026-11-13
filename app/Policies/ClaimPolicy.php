@@ -56,6 +56,26 @@ class ClaimPolicy
     }
 
     /**
+     * Tentukan apakah petugas dapat memverifikasi (menyetujui/menolak) klaim tertentu.
+     */
+    public function verify(User $user, Claim $claim): Response
+    {
+        if ($user->role !== 'admin') {
+            return Response::deny('Hanya petugas yang dapat memverifikasi klaim.');
+        }
+
+        if ($claim->claimant_id === $user->user_id) {
+            return Response::deny('Anda tidak dapat memverifikasi klaim yang Anda ajukan sendiri.');
+        }
+
+        if ($claim->status !== 'pending') {
+            return Response::deny('Klaim yang sudah diproses tidak dapat diverifikasi kembali.');
+        }
+
+        return Response::allow();
+    }
+
+    /**
      * Tentukan apakah pengguna dapat mengubah klaimnya sendiri.
      */
     public function update(User $user, Claim $claim): Response

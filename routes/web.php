@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\VerifikasiController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -72,6 +74,13 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:accessAdmin')->group(function () {
         Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
+        Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
+        Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+        Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+        Route::get('/admin/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+        Route::patch('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+        Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+
         Route::get('/admin/metadata/kategori', [MetadataController::class, 'kategoriIndex'])->name('admin.metadata.kategori');
         Route::get('/admin/metadata/kategori/create', [MetadataController::class, 'kategoriCreate'])->name('admin.metadata.kategori.create');
         Route::post('/admin/metadata/kategori', [MetadataController::class, 'kategoriStore'])->name('admin.metadata.kategori.store');
@@ -85,5 +94,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/metadata/lokasi/{location}/edit', [MetadataController::class, 'lokasiEdit'])->name('admin.metadata.lokasi.edit');
         Route::put('/admin/metadata/lokasi/{location}', [MetadataController::class, 'lokasiUpdate'])->name('admin.metadata.lokasi.update');
         Route::delete('/admin/metadata/lokasi/{location}', [MetadataController::class, 'lokasiDestroy'])->name('admin.metadata.lokasi.destroy');
+    });
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/verifikasi/klaim', [VerifikasiController::class, 'klaim'])->name('verifikasi.klaim');
+        Route::get('/verifikasi/klaim/{claim}', [VerifikasiController::class, 'showKlaim'])->name('verifikasi.klaim.show');
+        Route::patch('/verifikasi/klaim/{claim}/setujui', [VerifikasiController::class, 'setujuiKlaim'])->name('verifikasi.klaim.setujui');
+        Route::patch('/verifikasi/klaim/{claim}/tolak', [VerifikasiController::class, 'tolakKlaim'])->name('verifikasi.klaim.tolak');
+
+        Route::get('/verifikasi/banding', [VerifikasiController::class, 'banding'])->name('verifikasi.banding');
+        Route::get('/verifikasi/banding/{dispute}', [VerifikasiController::class, 'showBanding'])->name('verifikasi.banding.show');
+        Route::patch('/verifikasi/banding/{dispute}/terima', [VerifikasiController::class, 'terimaBanding'])->name('verifikasi.banding.terima');
+        Route::patch('/verifikasi/banding/{dispute}/tolak', [VerifikasiController::class, 'tolakBanding'])->name('verifikasi.banding.tolak');
     });
 });

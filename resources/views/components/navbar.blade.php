@@ -13,7 +13,9 @@
         'pengaturan' => 'Pengaturan',
         'admin.dashboard' => '',
         'admin.users' => 'Kelola Pengguna',
-        'admin.reports' => 'Verifikasi Laporan',
+        'admin.users.create' => 'Kelola Pengguna',
+        'admin.users.edit' => 'Kelola Pengguna',
+        'admin.verifikasi.*' => 'Verifikasi Laporan',
         'admin.metadata.*' => 'Kelola Metadata',
     ];
 
@@ -89,10 +91,10 @@
                                     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Dashboard Admin
                                     </a>
-                                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                    <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Kelola Pengguna
                                     </a>
-                                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                    <a href="{{ route('admin.verifikasi.klaim') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Verifikasi Laporan
                                     </a>
                                     <a href="{{ route('admin.metadata.kategori') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
