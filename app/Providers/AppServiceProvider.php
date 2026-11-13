@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\ItemMatch;
+use App\Models\User;
 use App\Policies\PenemuanPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -26,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(ItemMatch::class, PenemuanPolicy::class);
+
+        Gate::define('accessAdmin', fn (User $user): bool => $user->isAdmin());
 
         VerifyEmail::createUrlUsing(function ($notifiable): string {
             return URL::temporarySignedRoute(
