@@ -10,13 +10,13 @@
         'laporan.edit' => '',
         'klaim.saya' => '',
         'klaim.edit' => '',
-        'pengaturan' => 'Pengaturan',
+        'pengaturan' => '',
         'admin.dashboard' => '',
-        'admin.users' => 'Kelola Pengguna',
-        'admin.users.create' => 'Kelola Pengguna',
-        'admin.users.edit' => 'Kelola Pengguna',
-        'admin.verifikasi.*' => 'Verifikasi Laporan',
-        'admin.metadata' => 'Kelola Metadata',
+        'admin.users' => '',
+        'admin.users.create' => '',
+        'admin.users.edit' => '',
+        'admin.verifikasi.*' => '',
+        'admin.metadata' => '',
     ];
 
     $currentDropdownTitle = null;
