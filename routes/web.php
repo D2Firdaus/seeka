@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -69,4 +70,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/item/{item}/banding', [DisputeController::class, 'store'])->name('banding.store');
 
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware('can:accessAdmin');
+
+    Route::middleware('can:accessAdmin')->group(function () {
+        Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users');
+        Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+        Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+        Route::get('/admin/users/{user}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+        Route::patch('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+        Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+    });
 });
