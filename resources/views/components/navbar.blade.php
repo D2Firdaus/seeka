@@ -8,7 +8,8 @@
         'profile.update' => '',
         'laporan.saya' => '',
         'laporan.edit' => '',
-        'klaim.saya' => 'Klaim Saya',
+        'klaim.saya' => '',
+        'klaim.edit' => '',
         'pengaturan' => 'Pengaturan',
         'admin.dashboard' => 'Dashboard Admin',
         'admin.users' => 'Kelola Pengguna',
@@ -78,7 +79,7 @@
                                 <a href="{{ route('laporan.saya') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                     Laporan Saya
                                 </a>
-                                <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                <a href="{{ route('klaim.saya') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                     Klaim Saya
                                 </a>
                             </div>

@@ -159,7 +159,7 @@ test('claimant can submit a valid claim and records audit trail', function () {
             'declaration' => '1',
         ]);
 
-    $response->assertRedirect(route('home'))
+    $response->assertRedirect(route('klaim.saya'))
         ->assertSessionHas('success');
 
     $this->assertDatabaseHas('claims', [
@@ -204,7 +204,7 @@ test('claimant can submit a claim with image proof and linked lost item', functi
             'declaration' => '1',
         ]);
 
-    $response->assertRedirect(route('home'))
+    $response->assertRedirect(route('klaim.saya'))
         ->assertSessionHas('success');
 
     $claim = Claim::where('found_item_id', $foundItem->item_id)->first();

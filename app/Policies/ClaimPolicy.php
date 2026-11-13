@@ -54,4 +54,36 @@ class ClaimPolicy
 
         return Response::allow();
     }
+
+    /**
+     * Tentukan apakah pengguna dapat mengubah klaimnya sendiri.
+     */
+    public function update(User $user, Claim $claim): Response
+    {
+        if ($claim->claimant_id !== $user->user_id) {
+            return Response::deny('Anda hanya dapat mengubah klaim yang Anda ajukan sendiri.');
+        }
+
+        if ($claim->status !== 'pending') {
+            return Response::deny('Klaim yang sudah diproses petugas tidak dapat diubah.');
+        }
+
+        return Response::allow();
+    }
+
+    /**
+     * Tentukan apakah pengguna dapat menarik (menghapus) klaimnya sendiri.
+     */
+    public function delete(User $user, Claim $claim): Response
+    {
+        if ($claim->claimant_id !== $user->user_id) {
+            return Response::deny('Anda hanya dapat menarik klaim yang Anda ajukan sendiri.');
+        }
+
+        if ($claim->status !== 'pending') {
+            return Response::deny('Klaim yang sudah diproses petugas tidak dapat ditarik.');
+        }
+
+        return Response::allow();
+    }
 }
