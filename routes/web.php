@@ -41,6 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/pengaturan/notifikasi', [PengaturanController::class, 'updateNotifikasi'])->name('pengaturan.notifikasi');
     Route::patch('/pengaturan/password', [PengaturanController::class, 'updatePassword'])->name('pengaturan.password');
 
+    Route::get('/klaim-saya', [ClaimController::class, 'index'])->name('klaim.saya');
+    Route::get('/klaim-saya/{claim}/edit', [ClaimController::class, 'edit'])->name('klaim.edit');
+    Route::put('/klaim-saya/{claim}', [ClaimController::class, 'update'])->name('klaim.update');
+    Route::delete('/klaim-saya/{claim}', [ClaimController::class, 'destroy'])->name('klaim.destroy');
+
     Route::get('/laporan-saya', [LaporanController::class, 'index'])->name('laporan.saya');
     Route::get('/laporan-saya/{item}/edit', [LaporanController::class, 'edit'])->name('laporan.edit');
     Route::put('/laporan-saya/{item}', [LaporanController::class, 'update'])->name('laporan.update');
