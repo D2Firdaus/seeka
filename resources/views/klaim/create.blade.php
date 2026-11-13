@@ -5,7 +5,7 @@
 @section('content')
     <main class="mx-auto w-full max-w-7xl flex-1 px-5 pb-16 pt-8 sm:px-8">
         <header class="mb-8">
-            <h1 class="text-display font-display">
+            <h1 class="text-display font-display mb-[1.15em]">
                 Ajukan Klaim
             </h1>
 
@@ -83,9 +83,11 @@
                         <p id="proof-photo-error" class="mt-2 hidden text-label text-primary"></p>
                         <div id="proof-photo-preview" class="mt-3 hidden grid grid-cols-2 gap-3 min-[380px]:grid-cols-3">
                             <div class="relative overflow-hidden rounded-control border-[0.5px] border-line bg-white">
-                                <img id="proof-preview-img" alt="Preview bukti" class="aspect-square w-full bg-black/5 object-cover" />
+                                <img id="proof-preview-img" alt="Preview bukti"
+                                    class="aspect-square w-full bg-black/5 object-cover" />
                                 <div class="flex items-center justify-between gap-2 px-2 py-1.5">
-                                    <span id="proof-preview-name" class="min-w-0 truncate text-caption text-ink-soft"></span>
+                                    <span id="proof-preview-name"
+                                        class="min-w-0 truncate text-caption text-ink-soft"></span>
                                     <button type="button" id="proof-photo-remove"
                                         class="shrink-0 rounded-control p-1 text-ink-soft transition hover:bg-black/5 hover:text-primary"
                                         aria-label="Hapus foto">
