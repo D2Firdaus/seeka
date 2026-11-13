@@ -26,6 +26,26 @@ class DisputePolicy
     }
 
     /**
+     * Tentukan apakah petugas dapat memutuskan (menerima/menolak) banding tertentu.
+     */
+    public function resolve(User $user, Dispute $dispute): Response
+    {
+        if ($user->role !== 'admin') {
+            return Response::deny('Hanya petugas yang dapat memutuskan banding.');
+        }
+
+        if ($dispute->reported_by === $user->user_id) {
+            return Response::deny('Anda tidak dapat memutuskan banding yang Anda ajukan sendiri.');
+        }
+
+        if ($dispute->status !== 'open') {
+            return Response::deny('Banding yang sudah diputuskan tidak dapat diproses kembali.');
+        }
+
+        return Response::allow();
+    }
+
+    /**
      * Tentukan apakah pengguna dapat mengajukan banding untuk barang tertentu.
      */
     public function create(User $user, Item $item): Response

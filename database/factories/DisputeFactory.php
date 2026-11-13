@@ -23,6 +23,7 @@ class DisputeFactory extends Factory
             'claim_id' => Claim::factory()->approved(),
             'reported_by' => User::factory(),
             'reason' => fake()->paragraph(),
+            'resolution_note' => null,
             'status' => 'open',
             'resolved_by' => null,
             'resolved_at' => null,
@@ -36,6 +37,7 @@ class DisputeFactory extends Factory
     {
         return $this->state(fn () => [
             'status' => 'resolved',
+            'resolution_note' => 'Banding diterima, klaim terdahulu dicabut.',
             'resolved_by' => $admin ?? User::factory()->state(['role' => 'admin']),
             'resolved_at' => now(),
         ]);
@@ -48,6 +50,7 @@ class DisputeFactory extends Factory
     {
         return $this->state(fn () => [
             'status' => 'dismissed',
+            'resolution_note' => 'Bukti banding tidak cukup kuat.',
             'resolved_by' => $admin ?? User::factory()->state(['role' => 'admin']),
             'resolved_at' => now(),
         ]);

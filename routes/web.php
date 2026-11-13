@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\VerifikasiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -66,4 +67,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/item/{item}/banding', [DisputeController::class, 'create'])->name('banding.create');
     Route::post('/item/{item}/banding', [DisputeController::class, 'store'])->name('banding.store');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/verifikasi/klaim', [VerifikasiController::class, 'klaim'])->name('verifikasi.klaim');
+        Route::get('/verifikasi/klaim/{claim}', [VerifikasiController::class, 'showKlaim'])->name('verifikasi.klaim.show');
+        Route::patch('/verifikasi/klaim/{claim}/setujui', [VerifikasiController::class, 'setujuiKlaim'])->name('verifikasi.klaim.setujui');
+        Route::patch('/verifikasi/klaim/{claim}/tolak', [VerifikasiController::class, 'tolakKlaim'])->name('verifikasi.klaim.tolak');
+
+        Route::get('/verifikasi/banding', [VerifikasiController::class, 'banding'])->name('verifikasi.banding');
+        Route::get('/verifikasi/banding/{dispute}', [VerifikasiController::class, 'showBanding'])->name('verifikasi.banding.show');
+        Route::patch('/verifikasi/banding/{dispute}/terima', [VerifikasiController::class, 'terimaBanding'])->name('verifikasi.banding.terima');
+        Route::patch('/verifikasi/banding/{dispute}/tolak', [VerifikasiController::class, 'tolakBanding'])->name('verifikasi.banding.tolak');
+    });
 });

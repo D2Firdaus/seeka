@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['claim_id', 'reported_by', 'reason', 'status', 'resolved_by', 'resolved_at'])]
+#[Fillable(['claim_id', 'reported_by', 'reason', 'resolution_note', 'status', 'resolved_by', 'resolved_at'])]
 class Dispute extends Model
 {
     /** @use HasFactory<DisputeFactory> */
