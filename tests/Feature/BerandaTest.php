@@ -312,6 +312,7 @@ test('profile dropdown shows admin links when authenticated as admin', function 
         ->assertSee('Dashboard Admin')
         ->assertSee('Kelola Pengguna')
         ->assertSee('Verifikasi Laporan')
+        ->assertSee(route('admin.verifikasi.klaim'))
         ->assertSee('Kelola Metadata');
 });
 

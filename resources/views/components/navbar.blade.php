@@ -15,7 +15,7 @@
         'admin.users' => 'Kelola Pengguna',
         'admin.users.create' => 'Kelola Pengguna',
         'admin.users.edit' => 'Kelola Pengguna',
-        'admin.reports' => 'Verifikasi Laporan',
+        'admin.verifikasi.*' => 'Verifikasi Laporan',
         'admin.metadata' => 'Kelola Metadata',
     ];
 
@@ -94,7 +94,7 @@
                                     <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Kelola Pengguna
                                     </a>
-                                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                    <a href="{{ route('admin.verifikasi.klaim') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Verifikasi Laporan
                                     </a>
                                     <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">

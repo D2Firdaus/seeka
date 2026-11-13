@@ -49,7 +49,11 @@
                             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="table-layout: fixed;">
                                 <tr>
                                     <td class="notice-cell" style="padding: 14px 18px; background-color: #F8F9FA; border: 1px solid #DADCE0; border-radius: 8px; font-family: 'Open Sans', 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1.6; color: #5F6368;">
-                                        Email aktivasi ini dikirim ke <strong style="color: #202124;">{{ $email }}</strong>. Jika kamu tidak merasa membuat akun, abaikan email ini.
+                                        @hasSection('notice')
+                                            @yield('notice')
+                                        @else
+                                            Email aktivasi ini dikirim ke <strong style="color: #202124;">{{ $email }}</strong>. Jika kamu tidak merasa membuat akun, abaikan email ini.
+                                        @endif
                                     </td>
                                 </tr>
                             </table>
