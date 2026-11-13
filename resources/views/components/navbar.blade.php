@@ -16,7 +16,7 @@
         'admin.users.create' => '',
         'admin.users.edit' => '',
         'admin.verifikasi.*' => '',
-        'admin.metadata' => '',
+        'admin.metadata.*' => '',
     ];
 
     $currentDropdownTitle = null;
@@ -97,7 +97,7 @@
                                     <a href="{{ route('admin.verifikasi.klaim') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Verifikasi Laporan
                                     </a>
-                                    <a href="#" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
+                                    <a href="{{ route('admin.metadata.kategori') }}" class="flex items-center gap-3 px-4 py-2 text-body hover:bg-black/5">
                                         Kelola Metadata
                                     </a>
                                 </div>
@@ -128,7 +128,21 @@
         </div>
     </div>
 
-    @unless ($isSimpleNav)
+    @if (request()->routeIs('admin.metadata.*'))
+        <div class="w-full">
+            <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
+                <nav class="flex items-stretch gap-x-5 text-body sm:gap-x-6">
+                    <a href="{{ route('admin.metadata.kategori') }}" @class($tabClass(request()->routeIs('admin.metadata.kategori*')))>
+                        Kategori
+                    </a>
+
+                    <a href="{{ route('admin.metadata.lokasi') }}" @class($tabClass(request()->routeIs('admin.metadata.lokasi*')))>
+                        Lokasi
+                    </a>
+                </nav>
+            </div>
+        </div>
+    @elseif (! $isSimpleNav)
         <div class="w-full border-b border-black/10">
             <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
                 <nav class="flex items-stretch gap-x-5 text-body sm:gap-x-6">
@@ -166,5 +180,5 @@
                 </nav>
             </div>
         </div>
-    @endunless
+    @endif
 </header>
