@@ -7,15 +7,10 @@
 @endphp
 
 @section('content')
-    <main class="mx-auto w-full max-w-5xl flex-1 px-5 pb-16 pt-6 sm:px-8">
+    <main class="mx-auto w-full max-w-7xl flex-1 px-5 pb-16 pt-6 sm:px-8">
         <h1 class="text-display font-display mb-[1.15em]">Verifikasi Laporan</h1>
 
         <x-verifikasi-tabs active="klaim" />
-
-        <a href="{{ route('admin.verifikasi.klaim') }}"
-            class="text-caption font-semibold text-primary transition hover:underline">
-            &larr; Kembali ke Antrean Klaim
-        </a>
 
         @if ($errors->any())
             <x-alert type="error" class="mt-6">{{ $errors->first() }}</x-alert>
